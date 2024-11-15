@@ -3,37 +3,34 @@
   elevation: 0;
   margin-right: 40px; /* Adds spacing to the right of each button */
   box-shadow: 0px 0px 0px;
-  font-size: 28px;
+  font-size: 30px;
   border: 0px solid;
-  color: #706a5f; /* Text color */
-  background: linear-gradient(-45deg, #2f2323 40%, #cfa5a5 0 60%, #2f2323 0)
+  color: #c5a39c; /* Text color */
+  background: linear-gradient(-45deg, transparent 40%, #efa85d 0 60%, transparent 0) /*#2f2323*/
   right/350% 100% no-repeat,
-  linear-gradient(-45deg, #2f2323 40%, #cfa5a5 0 60%, #2f2323 0)
+  linear-gradient(-45deg, transparent 40%, #efa85d 0 60%, transparent 0)
   right/350% 100% no-repeat;
   -webkit-background-clip: text, padding-box;
   background-clip: text, padding-box;
-  transition: background-color 0.45s ease, background-position 0.45s ease, opacity 0.45s ease;
+  transition: color 0.5s ease-in-out, background-color 0.8s ease-in-out, background-position 0.8s ease, opacity 0.45s ease-in-out;
   border-radius: 5px;
-  margin-left: 50px;
   cursor: pointer;
   /* Ensure buttons have a visible height and width */
   width: auto;
 }
 
 .hover-btn.scrolling {
-  background: transparent;
-  color: #6f6553;
+  background: linear-gradient(-45deg, transparent 40%, #efa85d 0 60%, transparent 0) /*#2f2323*/
+  right/350% 100% no-repeat,
+  linear-gradient(-45deg, transparent 40%, #efa85d 0 60%, transparent 0)
+  right/350% 100% no-repeat;
+  color: #c5a39c;
   width: auto;
   transition-duration: 0.8s;
 }
 
 .hover-btn:hover {
+  transition: 0.8s;
+  color: #ebe1d6;
   background-position: left;
-  opacity: 80%;
-}
-
-/* Ensure links inherit button styles */
-.hover-btn a {
-  color: inherit;
-  text-decoration: none;
 }

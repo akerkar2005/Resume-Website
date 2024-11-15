@@ -1,0 +1,17 @@
+.container {
+    display: grid;
+    grid-template-rows: 5fr 1fr;
+    grid-area: 'terminal-container side-header';
+    position: absolute;
+    align-items: center;
+}
+
+.terminal-container {
+    position: absolute
+}
+
+
+.side-header {
+    position: absolute
+}
+

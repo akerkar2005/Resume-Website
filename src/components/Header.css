@@ -1,0 +1,55 @@
+
+.sticky-header {
+    background-color: #2f2323; /* Initial background color */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none; 
+    border: none;
+    transition: background-color 0.45s ease, backdrop-filter 0.45s ease, -webkit-backdrop-filter 0.45s ease, border 0.45s ease;
+    text-align: center;
+    color: #e3e5cd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    padding: 50px 10px; /* Adjust padding for vertical space */
+    z-index: 1000; /* Ensure header is above the black block */
+    width: 100%;
+    height: 120px;
+    box-sizing: border-box;
+    line-height: 100px;
+  }
+  
+  .sticky-header.scrolling {
+    background-color: transparent; /* Transition to transparent */
+    backdrop-filter: blur(10px); /* Apply the frosted glass effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+    border: transparent; /* Optional border for frosted glass effect */
+  }
+  
+  .nav {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .nav-button {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .nav-button a {
+    text-decoration: none;
+    color: #aa8c68;
+    font-weight: bold;
+  }
+  
+  .hover-btn {
+    border: none;
+    cursor: pointer;
+  }
+  
+  .hover-btn a:hover {
+    color: #f9dfc5;
+    transition: color 1s ease;
+  }
+  

@@ -1,5 +1,5 @@
 :root {
-  --bodyColor: "#000000";
+  --bodyColor: rgb(170, 145, 145);
 }
 
 
@@ -10,7 +10,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #88e9e716;
+  background-color: #df6341;;
 }
 
 code {

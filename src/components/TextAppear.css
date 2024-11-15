@@ -1,0 +1,125 @@
+/* Terminal Wrapper: Start from center */
+.terminal-wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0); /* Start at scale 0 */
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    z-index: 1; /* Background layer for terminal box */
+    transition: all 1s ease-out; /* Smooth animation for scaling */
+}
+
+.terminal-wrapper.expanded {
+    transform: translate(-50%, -50%) scale(1); /* Expand to full size */
+    width: 90vw;  /* Expand to 90% of the screen width */
+    height: 80vh; /* Expand to 80% of the screen height */
+    opacity: 1;
+}
+
+/* Terminal Header: Fixed to the top */
+.terminal-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background-color: #282f31;
+    cursor: move;
+    color: white;
+    padding: 10px 10px;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between; /* Space out buttons and text */
+    align-items: center;
+    z-index: 2;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+}
+
+/* Add a container for the header text */
+.terminal-header .header-title {
+    font-family: 'Courier New', Courier, monospace;
+    flex-grow: 1;  /* Allow this to grow and take up available space */
+    text-align: center;
+    color:#7095a0;
+}
+
+/* Window buttons inside the terminal header */
+.window-buttons {
+    display: flex;
+    gap: 9px;
+}
+
+.window-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ff605c; /* Close button */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.window-button:nth-child(2) {
+    background-color: #ffbd3b; /* Minimize button */
+}
+
+.window-button:nth-child(3) {
+    background-color: #4cd964; /* Maximize button */
+}
+
+.window-button:hover {
+    background-color: #ff3b30; /* Change color on hover */
+}
+
+/* Terminal Box: The body of the terminal */
+.terminal-box {
+    position: absolute;
+    top: 40px; /* Space made for the header */
+    left: 0;
+    width: 100%;
+    height: calc(100% - 40px); /* Take full height minus header */
+    background-color: black;
+    color: #0febad;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 22px;
+    line-height: 28px;
+    padding: 20px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    z-index: 3;
+    box-sizing: border-box;
+}
+
+/* Cursor animation */
+.cursor {
+    position: absolute;
+    width: 12px; /* Adjust width of the cursor rectangle */
+    height: 24px; /* Adjust height of the cursor rectangle */
+    background-color: rgb(54, 229, 150); /* Cursor color */
+    animation: blink-caret 1s step-start infinite; /* Blinking effect */
+}
+
+@keyframes blink-caret {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .terminal-wrapper.expanded {
+        width: 95vw;
+        height: 70vh;
+    }
+
+    .terminal-box {
+        font-size: 14px;
+        line-height: 22px;
+    }
+
+    .terminal-header {
+        font-size: 18px;
+    }
+}

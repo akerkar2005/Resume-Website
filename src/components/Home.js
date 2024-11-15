@@ -1,0 +1,67 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import '../App.css';
+import TextAppear from './TextAppear';
+
+function Home() {
+    const messages = [
+        'Welcome',
+        'Check Out My Resume (click to download)',
+        'Boiler Up!'
+    ];
+
+    const [currentDate, setCurrentDate] = useState(new Date());
+
+    useEffect(() => {
+        setCurrentDate(new Date());
+    }, []); // Empty dependency array ensures this runs only once
+
+    const [welcome, setWelcome] = useState('');
+    const message = 'ssh akerkar@data.cs.purdue.edu\n';
+    const output = '*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n' +
+    '-                       Password-only logins have been disabled                      *\n' +
+    '*         Use of Duo Mobile, a hardware token, or an SSH key pair now required       -\n' +
+    '-        Duo Mobile: Enter your password followed by a comma followed by PUSH        *\n' +
+    '*        Token: Enter your password followed by a comma followed by 6-digit code     -\n' +
+    '*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n';
+    const output2 = 'Last login: ' + currentDate.toDateString() + ' from 420.56.13.37';
+    const message2 = 'cd ~/akerkar/menu';
+    const message3 = 'ls -la';
+    const output3 = '-rw-r--r--@   1 akerkar  staff     2307497 Nov 14 22:31 (8) Home.html\n' +
+                    '-rw-r--r--@   1 akerkar  staff     2307497 Nov 14 22:32 (8) Skills.html\n' +
+                    '-rw-r--r--@   1 akerkar  staff     2307497 Nov 14 22:32 (8) Projects.html\n' +
+                    '-rw-r--r--@   1 akerkar  staff     2307497 Nov 14 22:33 (8) Contact.html\n';
+    const message4 = 'clear';
+    const finalmsgopen = 'open Home.html';
+
+    const getRandomMessage = useCallback(() => {
+        const randomIndex = Math.floor(Math.random() * messages.length);
+        return messages[randomIndex];
+    }, [messages]);
+
+    useEffect(() => {
+        setWelcome(getRandomMessage());
+    }, [getRandomMessage]);
+
+    return (
+        <div className="App">
+            <div className="container">
+                <div className="terminal-wrapper expanded">
+                        <TextAppear commands={[
+                            { message: message, type: 'typewriter' },
+                            { message: output, type: 'instant' },
+                            { message: output2, type: 'instant' },
+                            { message: message2, type: 'typewriter' },
+                            { message: message3, type: 'typewriter' },
+                            { message: output3, type: 'instant' },
+                            { message: message4, type: 'typewriter' },
+                            { message: message4, type: 'clear' },
+                            { message: finalmsgopen, type: 'typewriter' },
+                            { message: finalmsgopen, type: 'clear' }
+                        ]} />
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default Home;
