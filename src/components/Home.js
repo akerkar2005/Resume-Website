@@ -16,6 +16,7 @@ function Home() {
     }, []); // Empty dependency array ensures this runs only once
 
     const [welcome, setWelcome] = useState('');
+    const login = 'Last login: ' + currentDate.toDateString() + ' ' + currentDate.toLocaleTimeString() + ' on ttys011';
     const message = 'ssh akerkar@data.cs.purdue.edu\n';
     const output = '*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n' +
     '-                       Password-only logins have been disabled                      *\n' +
@@ -23,7 +24,8 @@ function Home() {
     '-        Duo Mobile: Enter your password followed by a comma followed by PUSH        *\n' +
     '*        Token: Enter your password followed by a comma followed by 6-digit code     -\n' +
     '*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n';
-    const output2 = 'Last login: ' + currentDate.toDateString() + ' from 420.56.13.37';
+    const output2Date = new Date(currentDate.getTime() + 5000); // Add 5000 milliseconds (5 seconds)
+    const output2 = 'Last login: ' + output2Date.toDateString() + ' ' + output2Date.toLocaleTimeString() + ' from 420.56.13.37';
     const message2 = 'cd ~/akerkar/menu';
     const message3 = 'ls -la';
     const output3 = '-rw-r--r--@   1 akerkar  staff     2307497 Nov 14 22:31 (8) Home.html\n' +
@@ -47,6 +49,7 @@ function Home() {
             <div className="container">
                 <div className="terminal-wrapper expanded">
                         <TextAppear commands={[
+                            { message: login, type: 'instant' },
                             { message: message, type: 'typewriter' },
                             { message: output, type: 'instant' },
                             { message: output2, type: 'instant' },

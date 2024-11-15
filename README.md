@@ -1,70 +1,7 @@
-# Getting Started with Create React App
+# Personal Website By Atharva Kerkar
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Introduction
+Hi! This public GitHub repository holds the source code for my personal website. I am hosting it (the URL link to the website will be added at the start of this documentation) so that potential recruiters and other interested people can see what I've been up to and learn more about me. In other news, I just want to say thank you for considering me as a potential employee if you are reading this in the future. In this README, I will go over the thoughts I had towards each section of this website, some tests I ran, and some minor fun details (i.e. Behind The Scenes technicalities).
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Section 1: The Terminal
+This was the weirdest part about this project. Keep in mind that this was the first time I ever coded a website with React, and the first time I designed a website myself without any outside help, so bear with me! I wanted to create a Computer Science-y introduction to my website and I was inspired by the [GitHub software engineering mailing list UI](https://swelist.com) to have an animated introduction that had something to do with a pseudo terminal. I got to work and researched a lot, and the solution I came up with was somewhat inefficient but got the job done. In the future, I hope that through a career in software engineering I can find more efficient ways to solve problems like these, especially in the backend aspect of JavaScript, Python, or other lower level languages. In regards to whether I will update the introduction... I am not sure yet. I feel like it is short, simple, sweet, and engaging enough to the average user, and I had a lot of fun with it. I learned more about how CSS, JSX, and React as a whole worked through this part of the project. My only hope for the future web pages I design is that I won't struggle as much as I did with this! It was quite the learning curve.

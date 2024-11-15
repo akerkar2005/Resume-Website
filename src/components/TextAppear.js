@@ -8,8 +8,10 @@ function TextAppear({ commands = [] }) {
     const [isExpanded, setIsExpanded] = useState(false); // Start with false for animation
     const [cursorPosition, setCursorPosition] = useState({ left: 0, top: 0 });
     const [headerTitle, setHeaderTitle] = useState('atharvakerkar@pal-nat'); // Initial header title
+    const [directory, setDirectory] = useState('$ '); // Initial directory
     const textRef = useRef(null);
     const intervalRef = useRef(null);
+
 
     // Helper function for delay
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -23,72 +25,85 @@ function TextAppear({ commands = [] }) {
         return () => clearTimeout(timer); // Clean up the timeout
     }, []);
 
-    useEffect(() => {
+    const isProcessingRef = useRef(false); // Prevent overlapping execution
+    const prev = useRef(-1);
+    useEffect(() => {    
         const processCommand = async () => {
-            if (currentIndex < commands.length) {
-                const { message = '', type } = commands[currentIndex]; // Default to empty string
-    
-                // Apply delay for a specific command (e.g., third command)
-                if (currentIndex === 2) {
+            if (currentIndex < commands.length && isProcessingRef.current === false && prev.current !== currentIndex) {
+                console.log(prev.current);
+                prev.current = currentIndex;
+                isProcessingRef.current = true; // Lock execution
+                console.log("current: " + currentIndex);
+                const { message = '', type } = commands[currentIndex];
+
+                // Apply command-specific logic
+                if (currentIndex === 3) {
                     setCurrentText('');
-                    await delay(800); // Delay of 1000ms = 1 second
+                    setDirectory('akerkar@data:~$ ');
+                    await delay(800);
                 }
-                if (currentIndex == 6) {
+                if (currentIndex === 4) {
+                    setDirectory('~/akerkar@data:~/akerkar/menu$ ');
+                }
+                if (currentIndex === 7) {
                     await delay(2500);
                 }
-    
+
                 if (type === 'instant') {
-                    if (message) {
-                        setTexts((prev) => [...prev, message]); // Add instant message without $
-                    } else {
-                        setTexts((prev) => [...prev, '']); // Add empty line for empty command
-                    }
-                    setCurrentIndex((prev) => prev + 1);
-                } else if (type === 'typewriter' && message) {
-                    let letterIndex = 0; // Reset letter index for new command
-                    setCurrentText('$ '); // Start currentText with $
-    
-                    if (intervalRef.current) {
-                        clearInterval(intervalRef.current);
-                    }
-    
-                    intervalRef.current = setInterval(() => {
-                        if (letterIndex < message.length) {
-                            setCurrentText((prev) => `$ ${message.slice(0, letterIndex + 1)}`);
-                            letterIndex++;
-                        } else {
-                            clearInterval(intervalRef.current);
-                            setTexts((prev) => [...prev, `$ ${message}`]);
-                            setCurrentIndex((prev) => prev + 1);
-                            setCurrentText('$ ');
-                        }
-                    }, 90); // Adjust typing speed
+                    setTexts((prev) => [...prev, message]);
+                    setCurrentIndex(currentIndex + 1); // Move to the next command
+                }
+                else if (type === 'typewriter' && message) {
+                    let letterIndex = 0;
+                    setCurrentText(directory);
+                    clearInterval(intervalRef.current);
+                    console.log('typewrite');
+
+                    await typewriterEffect(message); // Use async function for typewriter effect
+                    setCurrentIndex(currentIndex + 1);
+                    console.log('typewrite');
+
                 } else if (type === 'clear') {
                     setTexts([]);
                     setCurrentText('$ ');
-                    setCurrentIndex((prev) => prev + 1);
+                    setCurrentIndex(currentIndex + 1);
                     if (currentIndex === commands.length - 1) {
                         setCurrentText('');
                     }
                 }
-    
-                // Dynamically change the headerTitle based on the currentIndex
-                if (currentIndex === 2) {
+                if (currentIndex === 3) {
                     setHeaderTitle('ssh akerkar@data.cs.purdue.edu');
                 }
+                isProcessingRef.current = false; // Unlock execution
             }
         };
-    
+
         processCommand();
-    
+
         return () => {
             if (intervalRef.current) {
                 clearInterval(intervalRef.current);
             }
         };
     }, [currentIndex, commands]);
-    
 
+    // Helper function to handle typewriter effect with async/await
+    const typewriterEffect = async (message) => {
+        let letterIndex = 0;
+        setCurrentText(directory); // Set the initial text to the directory
+
+        // Loop through each character and simulate typing
+        for (let letterIndex = 0; letterIndex < message.length; letterIndex++) {
+            setCurrentText((prev) => directory + message.slice(0, letterIndex + 1)); // Add one letter at a time
+            await new Promise((resolve) => setTimeout(resolve, 80)); // Wait 90ms between characters
+        }
+
+        // Once all letters are typed, add the full message to the text area
+        setTexts((prev) => [...prev, directory + message]);
+        setCurrentText(directory); // Reset the current text after typing finishes
+    };
+
+    
     useEffect(() => {
         if (textRef.current) {
             // Get the bounding rect of the current text
