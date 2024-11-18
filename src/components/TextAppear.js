@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './TextAppear.css';
 
-function TextAppear({ commands = [] }) {
+function TextAppear({ commands = [], onComplete }) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [texts, setTexts] = useState([]); // Store all completed texts
     const [currentText, setCurrentText] = useState(''); // Text being typed out
@@ -9,6 +9,7 @@ function TextAppear({ commands = [] }) {
     const [cursorPosition, setCursorPosition] = useState({ left: 0, top: 0 });
     const [headerTitle, setHeaderTitle] = useState('atharvakerkar@pal-nat'); // Initial header title
     const [directory, setDirectory] = useState('$ '); // Initial directory
+    const [isComplete, setIsComplete] = useState(false); // New state to track completion
     const textRef = useRef(null);
     const intervalRef = useRef(null);
 
@@ -17,16 +18,25 @@ function TextAppear({ commands = [] }) {
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     useEffect(() => {
+        if (isComplete) {
+            console.log('Terminal processing complete. Collapsing terminal...');
+            setTimeout(() => {
+                setIsExpanded(false); // Collapse the terminal
+            }, 10); // Optional delay to show a brief "complete" state
+        }
+    }, [isComplete]);    
+
+    useEffect(() => {
         // Delay the expansion of the wrapper to trigger animation
         const timer = setTimeout(() => {
+            console.log("expanding")
             setIsExpanded(true); // After a small delay, set expanded to true
-        }, 100); // 100ms delay (adjust if needed)
-
+        }, 300); // 100ms delay (adjust if needed)
         return () => clearTimeout(timer); // Clean up the timeout
     }, []);
 
     const isProcessingRef = useRef(false); // Prevent overlapping execution
-    const prev = useRef(-1);
+    const prev = useRef(-1); // keeps track of the previous command index
     useEffect(() => {    
         const processCommand = async () => {
             if (currentIndex < commands.length && isProcessingRef.current === false && prev.current !== currentIndex) {
@@ -36,18 +46,18 @@ function TextAppear({ commands = [] }) {
                 console.log("current: " + currentIndex);
                 const { message = '', type } = commands[currentIndex];
 
-                // Apply command-specific logic
                 if (currentIndex === 3) {
                     setCurrentText('');
                     setDirectory('akerkar@data:~$ ');
                     await delay(800);
                 }
                 if (currentIndex === 4) {
-                    setDirectory('~/akerkar@data:~/akerkar/menu$ ');
+                    setDirectory('akerkar@data:~/akerkar/menu$ ');
                 }
                 if (currentIndex === 7) {
                     await delay(2500);
                 }
+
 
                 if (type === 'instant') {
                     setTexts((prev) => [...prev, message]);
@@ -69,11 +79,14 @@ function TextAppear({ commands = [] }) {
                     setCurrentIndex(currentIndex + 1);
                     if (currentIndex === commands.length - 1) {
                         setCurrentText('');
+                        setIsComplete(true);
+                        onComplete()
                     }
                 }
                 if (currentIndex === 3) {
                     setHeaderTitle('ssh akerkar@data.cs.purdue.edu');
                 }
+
                 isProcessingRef.current = false; // Unlock execution
             }
         };
@@ -101,6 +114,9 @@ function TextAppear({ commands = [] }) {
         // Once all letters are typed, add the full message to the text area
         setTexts((prev) => [...prev, directory + message]);
         setCurrentText(directory); // Reset the current text after typing finishes
+        if (currentIndex === commands.length - 2) {
+            await delay(400);
+        }
     };
 
     
@@ -145,7 +161,14 @@ function TextAppear({ commands = [] }) {
                 ))}
                 <p style={{ margin: 0, display: 'inline' }} ref={textRef}>
                     {currentText}
-                    <span className="cursor" style={cursorStyle}>|</span>
+                    {!isComplete && 
+                        (<span 
+                            className="cursor" 
+                            style={cursorStyle}
+                        >
+                        | 
+                        </span>)
+                    }
                 </p>
             </div>
         </div>

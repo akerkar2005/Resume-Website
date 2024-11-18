@@ -1,36 +1,59 @@
+/* Base hover button styles */
 .hover-btn {
-  mode: "elevated";
-  elevation: 0;
-  margin-right: 40px; /* Adds spacing to the right of each button */
-  box-shadow: 0px 0px 0px;
+  margin-left: 40px;
+  margin-right: 10px;
+  margin-top: 0px;
   font-size: 30px;
-  border: 0px solid;
-  color: #c5a39c; /* Text color */
-  background: linear-gradient(-45deg, transparent 40%, #efa85d 0 60%, transparent 0) /*#2f2323*/
-  right/350% 100% no-repeat,
-  linear-gradient(-45deg, transparent 40%, #efa85d 0 60%, transparent 0)
-  right/350% 100% no-repeat;
+  background-clip: padding-box; /* Ensure the background doesn't clip the border */
+  background: linear-gradient(45deg, #ae2b4a95, #eb725d); /* Gradient colors */
+  -webkit-background-clip: text; /* Clip the gradient to the text */
+  -webkit-text-fill-color: transparent; /* Make the text transparent so the gradient shows */
+  color: transparent; /* Make the text transparent for gradient application */  
+  /*background: linear-gradient(-45deg, transparent 40%, #efa85d 0 60%, transparent 0);
   -webkit-background-clip: text, padding-box;
-  background-clip: text, padding-box;
-  transition: color 0.5s ease-in-out, background-color 0.8s ease-in-out, background-position 0.8s ease, opacity 0.45s ease-in-out;
-  border-radius: 5px;
+  background-clip: text, padding-box;*/
+  transition: all 0.4s ease-in-out;
   cursor: pointer;
-  /* Ensure buttons have a visible height and width */
+  border-radius: 5px;
   width: auto;
+  text-decoration: none;
+  font-weight: bold;
 }
 
-.hover-btn.scrolling {
-  background: linear-gradient(-45deg, transparent 40%, #efa85d 0 60%, transparent 0) /*#2f2323*/
-  right/350% 100% no-repeat,
-  linear-gradient(-45deg, transparent 40%, #efa85d 0 60%, transparent 0)
-  right/350% 100% no-repeat;
-  color: #c5a39c;
-  width: auto;
-  transition-duration: 0.8s;
-}
-
+/* Hover state: Highlighted when hovering */
 .hover-btn:hover {
-  transition: 0.8s;
-  color: #ebe1d6;
+  color: #ebe1d6;  /* Text color changes on hover */
   background-position: left;
+  transform: scale(1.2);  /* Slight scale effect on hover */
+  transition: all 0.2s ease-in-out;
+}
+
+/* Active state for the button: Apply when selected */
+.hover-btn.active {
+  margin-left: 40px;
+  margin-right: 10px;
+  font-size: 30px;
+  background-clip: padding-box; /* Ensure the background doesn't clip the border */
+  background: linear-gradient(45deg, #ff7e79, #ffa94d); /* Brighter gradient colors */
+  -webkit-background-clip: text; /* Clip the gradient to the text */
+  -webkit-text-fill-color: transparent; /* Make the text transparent so the gradient shows */
+  color: #fff; /* Fallback color for browsers that don't support gradients */
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(220, 180, 156, 0.85), inset 0 1px 2px rgba(2, 0, 0.1, 0.1); /* Outer and inner shadow */
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7); /* Lighter shadow for a glowing effect */
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  display: inline-block;
+  width: auto;
+  height: auto;
+  border: none;
+  transform: scale(1.2); /* Increase scale for active button */
+}
+
+
+/* When hovered, apply more prominent hover effect */
+.hover-btn.active:hover {
+  transform: scale(1.4);  /* Increase scale when hovering on active button */
 }
