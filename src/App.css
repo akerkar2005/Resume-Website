@@ -51,19 +51,3 @@
 
 
 
-.background-image::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  
-  /* Radial gradient for center glow */
-  background: radial-gradient(circle, rgba(140, 199, 133, 0.4), rgba(28, 51, 55, 0) 30%), 
-              radial-gradient(circle, rgba(105, 109, 200, 0.3), rgba(110, 4, 43, 0.7), rgba(39, 40, 35, 0.9));
-  
-  mix-blend-mode: overlay;
-  pointer-events: none; /* Ensures the overlay doesn't interfere with interactions */
-  z-index: 1; /* Ensure it’s above the background image */
-}

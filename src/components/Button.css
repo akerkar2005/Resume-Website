@@ -2,16 +2,12 @@
 .hover-btn {
   margin-left: 40px;
   margin-right: 10px;
-  margin-top: 0px;
   font-size: 30px;
   background-clip: padding-box; /* Ensure the background doesn't clip the border */
   background: linear-gradient(45deg, #ae2b4a95, #eb725d); /* Gradient colors */
   -webkit-background-clip: text; /* Clip the gradient to the text */
   -webkit-text-fill-color: transparent; /* Make the text transparent so the gradient shows */
   color: transparent; /* Make the text transparent for gradient application */  
-  /*background: linear-gradient(-45deg, transparent 40%, #efa85d 0 60%, transparent 0);
-  -webkit-background-clip: text, padding-box;
-  background-clip: text, padding-box;*/
   transition: all 0.4s ease-in-out;
   cursor: pointer;
   border-radius: 5px;
@@ -43,7 +39,6 @@
   font-weight: bold;
   text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7); /* Lighter shadow for a glowing effect */
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
   position: relative;
   display: inline-block;
   width: auto;

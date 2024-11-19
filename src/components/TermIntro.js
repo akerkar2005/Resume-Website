@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
 import TextAppear from './TextAppear';
@@ -8,13 +8,6 @@ function TermIntro() {
     const [expandHome, setExpandHome] = useState(false);
     const [showTerminal, setShowTerminal] = useState(true); // Keep terminal visible across routes
     const navigate = useNavigate();
-
-    // Messages for the terminal
-    const messages = [
-        'Welcome',
-        'Check Out My Resume (click to download)',
-        'Boiler Up!'
-    ];
 
     useEffect(() => {
         setCurrentDate(new Date());
@@ -31,7 +24,7 @@ function TermIntro() {
     const output2Date = new Date(currentDate.getTime() + 5000);
     const output2 = 'Last login: ' + output2Date.toDateString() + ' ' + output2Date.toLocaleTimeString() + ' from 420.56.13.37';
     const message2 = 'cd ~/akerkar/menu';
-    const message3 = 'lss -la';
+    const message3 = 'ls -la';
     const output3 = '-rw-r--r--@   1 akerkar  staff     2307497 Nov 14 22:31 (8) Home.html\n' +
         '-rw-r--r--@   1 akerkar  staff     2307497 Nov 14 22:32 (8) Skills.html\n' +
         '-rw-r--r--@   1 akerkar  staff     2307497 Nov 14 22:32 (8) Projects.html\n' +
