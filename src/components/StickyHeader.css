@@ -1,0 +1,519 @@
+/* Base Sticky Header */
+.sticky-header {
+    background-color: var(--background-footer);
+    color: var(--text-secondary);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* Safari */
+    border: transparent;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;  /* Fix it to the top of the screen */
+    top: 0; /* Start from top */
+    z-index: 1000; /* Ensure it's always on top */
+    width: 100%;
+    height: 100px;
+    padding: 70px 50px;
+    line-height: 80px;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out; /* Smooth transition */
+    transform: translateY(0); /* Initially no translation */
+  }
+  
+  
+  /* Base hover button styles */
+  .nav .hover-btn {
+    margin-left: 40px;
+    margin-right: 10px;
+    font-size: 30px;
+    border: transparent;
+    background-clip: padding-box; /* Ensure the background doesn't clip the border */
+    background: linear-gradient(45deg, var(--text-primary), var(--text-secondary)); /* Gradient colors */
+    -webkit-background-clip: text; /* Clip the gradient to the text */
+    -webkit-text-fill-color: transparent; /* Make the text transparent so the gradient shows */
+    color: transparent; /* Make the text transparent for gradient application */  
+    transition: all 0.4s ease-in-out;
+    cursor: pointer;
+    border-radius: 5px;
+    width: auto;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  /* Hover state: Highlighted when hovering */
+  .hover-btn:hover {
+    color: #ebe1d6;  /* Text color changes on hover */
+    background-position: left;
+    transform: scale(1.2);  /* Slight scale effect on hover */
+    transition: all 0.2s ease-in-out;
+  }
+  
+  /* Active state for the button: Apply when selected */
+  .hover-btn.active {
+    margin-left: 40px;
+    margin-right: 10px;
+    font-size: 30px;
+    background-clip: padding-box; /* Ensure the background doesn't clip the border */
+    background: linear-gradient(45deg, var(--text-primary), #ffa94d); /* Brighter gradient colors */
+    -webkit-background-clip: text; /* Clip the gradient to the text */
+    -webkit-text-fill-color: transparent; /* Make the text transparent so the gradient shows */
+    color: #fff; /* Fallback color for browsers that don't support gradients */
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(220, 180, 156, 0.85), inset 0 1px 2px rgba(2, 0, 0.1, 0.1); /* Outer and inner shadow */
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7); /* Lighter shadow for a glowing effect */
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    border: none;
+    transform: scale(1.2); /* Increase scale for active button */
+  }
+  
+  
+  /* When hovered, apply more prominent hover effect */
+  .hover-btn.active:hover {
+    transform: scale(1.4);  /* Increase scale when hovering on active button */
+  }
+  
+  
+  /* Adjust header when scrolling quickly */
+  .sticky-header.scrolled {
+    transform: translateY(-100%); /* Move the header up when scrolling */
+  }
+  
+  /* Parallax or Zoom effect */
+  .sticky-header.zoom {
+    transform: scale(0.9) translateY(0); /* Zoom-out effect */
+  }
+  
+  /* When header is hidden temporarily */
+  .sticky-header.hidden {
+    transform: translateY(-120%); /* Fully hide it off-screen */
+  }
+
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+/* Keyframe animation for rotation */
+@keyframes dance {
+    0% {
+        transform: rotate(0deg) scale(2.6);
+    }
+    25% {
+        transform: rotate(15deg) scale(2.6);
+    }
+    50% {
+        transform: rotate(0deg) scale(2.6);
+    }
+    75% {
+        transform: rotate(-15deg) scale(2.6);
+    }
+    100% {
+        transform: rotate(0deg) scale(2.6);
+    }
+}
+  
+.left-icon {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-right: 1rem; /* Add spacing between the icon and the other buttons */
+}
+
+/* Apply the rotation animation to the background image */
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image scales properly */
+    z-index: 1; /* Ensure it's behind the icon but above the container background */
+    opacity: 1;
+    transition: all 0.4s ease-in-out;
+    transform: scale(var(--scale-factor, 1));
+}
+
+  
+.nav-icon {
+    position: relative;
+    height: 2rem; /* Adjust the size of the icon */
+    width: 2rem;
+    object-fit: contain; /* Ensure the icon scales properly */
+    z-index: 10;
+    animation: dance 5s infinite; /* Rotate forever */
+}
+
+.left-icon:hover {
+    --scale-factor: 2.4; /* Scale up on hover */
+}
+
+.hover-btn:active {
+    filter: hue-rotate(4deg) brightness(17);
+}
+
+  /* Container for hamburger icon */
+  .hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    gap: var(--hamburger-gap); /* Adjust gap between bars */
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    position:absolute;
+    top: 50px;
+    right: 10px;
+    z-index: 2;
+  }
+  
+  .hamburger-menu:has(input:checked) {
+    --foreground: var(--text-secondary);
+    --background: var(--background-primary);
+  }
+  .hamburger-menu:has(input:focus-visible)::before,
+  .hamburger-menu:has(input:focus-visible)::after,
+  .hamburger-menu input:focus-visible {
+    border: 1px solid var(--background);
+    box-shadow: 0 0 0 1px var(--foreground);
+  }
+  
+  /* Creating the bars of the hamburger */
+  .hamburger-menu::before,
+  .hamburger-menu::after,
+  .hamburger-menu input {
+    content: "";
+    width: var(--bar-width); /* Width of each bar */
+    height: var(--bar-height); /* Height of each bar */
+    background-color: var(--foreground); /* color for the bars */
+    border-radius: 9999px;
+    transform-origin: left center;
+    transition: opacity var(--animation-timing), width var(--animation-timing), 
+                rotate var(--animation-timing), translate var(--animation-timing),
+                background-color var(--animation-timing); /* Smooth transition for animation */
+  
+    }
+  
+/* Right-Aligned Navigation Buttons */
+.nav-buttons {
+    display: flex;
+    gap: 1rem; /* Add spacing between buttons */
+}
+  /* Remove input appearance and reset margin */
+  .hamburger-menu input {
+    appearance: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    pointer-events: none; /* Prevent interaction with the checkbox directly */
+  }
+  .hamburger-menu:has(input:checked)::before {
+    rotate: 45deg;
+    width: var(--x-width);
+    translate: 0 calc(var(--bar-height) / -2);
+  }
+  
+  .hamburger-menu:has(input:checked)::after {
+    rotate: -45deg;
+    width: var(--x-width);
+    translate: 0 calc(var(--bar-height)/ 2);
+  }
+  
+  .hamburger-menu input:checked {
+    opacity: 0;
+    width: 0;
+  }
+  
+  .sidebar {
+    position: absolute;
+    pointer-events: none;
+    display: flex;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--background-sidebar);
+    color: var(--background);
+    opacity: 0;
+    transition: all var(--animation-timing); /* Sync opacity and transform */
+    padding-top: calc(var(--hamburger-height) + var(--hamburger-margin));
+    overflow-y: hidden;
+    overflow-x: hidden;
+    z-index: 1;
+    transform: translateX(100%); /* Start off-screen */
+  }
+  
+  
+  .hamburger-menu:has(input:checked) + .sidebar {
+    pointer-events: all;
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px); /* Safari */
+    background-color: var(--background-sidebar);
+    align-items: center;
+    opacity: 1;
+    display: flex;
+    transform: translateX(20%); /* Slide in from the right */
+  }
+  
+  .sidebar .nav-button
+  {
+  
+    padding: 1rem;
+    min-height: 100vh;
+    font-size: 1.5rem;
+    max-width:550px;
+    margin:0 10vw;
+    border-radius: 1rem;
+  
+    color: var(--background);
+    height: 100vh;
+    width: 100vw;
+    text-decoration: none; /* Remove underline */
+    transition: all var(--animation-timing); /* Smooth transition */
+    transform: translateY(30%) scale(1.4);
+  }
+  
+  .sidebar .nav-button .hover-btn {
+    display: block;
+    border: none;
+    cursor: pointer;
+    background: var(--gradient-fg-primary-secondary); /* Gradient colors */
+    background-clip: padding-box; /* Ensure the background doesn't clip the border */
+    -webkit-background-clip: text; /* Clip the gradient to the text */
+    -webkit-text-fill-color: transparent; /* Make the text transparent so the gradient shows */
+    color: transparent; /* Make the text transparent for gradient application */  
+    transition: all 0.4s ease-in-out;
+    cursor: pointer;
+    border-radius: 5px;
+    width: auto;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 15vw;
+  }
+
+
+
+@media (min-width: 300px) and (max-width: 538px) {
+      
+    .left-icon {
+        position: relative;
+        background: none;
+        border: none;
+        cursor: pointer;
+        margin-right: 50rem; /* Add spacing between the icon and the other buttons */
+        transform: translateY(-40%);
+    }
+
+    
+    .nav {
+      display: none; /* Hide nav on mobile */
+    }
+  
+    .main-content {
+      height: 100vh;
+      width: 100vw;
+      overflow-y: auto;
+    }
+    .main-content::before {
+      height: 200vh;
+    }
+    .resume-section {
+      height: 200vh;
+      width: 90vw;
+      grid-template-areas: 
+        "image"
+        "content";
+      grid-template-columns: 1fr; /* Stack the image and content */
+      grid-template-rows: 1fr 1fr;
+    }
+  
+    .image-container {
+      opacity: 1;
+      grid-area: "image";
+      margin-bottom: 85vh; /* Adds space between stacked elements */
+    }
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px; /* Adds rounded corners to the image */
+      object-fit: cover; /* Ensures the image maintains aspect ratio and fills the container */
+      max-width: 100%; /* Prevents the image from overflowing */
+      padding: 0px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adds subtle shadow for better aesthetics */
+    }
+  
+    .content-container {
+      grid-area: "content";
+      padding-bottom: 85vh;
+    }
+    /* Content text styling */
+    .content-container h1 {
+      transform: translateY(-30%);
+      font-size: 4rem;
+      text-align: center;
+    }
+    
+    .content-container p {
+      line-height: 1.6;
+      text-align: center;
+      font-size: 1rem;
+      padding: 40px 2px;
+    }
+  
+    .info-container p {
+      line-height: 2;
+      text-align: center;
+      padding-top: 7rem;
+      font-size: 1rem;
+    }
+    
+    .hamburger-menu {
+      display: flex;
+    }
+  
+  
+    .footer {
+      padding-bottom: 20px;
+    }
+  
+    .rights {
+      display: none;
+    }
+  }
+  
+  
+  /* specific lower-bounded actions for a decent width while also maintaining mobile-friendliness...  */
+  /* This has low precedence so these rules could be changed easily for later properties */
+  @media (min-width: 540px) and (max-width: 666px) {
+    .nav {
+      display: none; /* Hide nav on mobile */
+    }
+    .resume-section {
+      height: 200vh;
+      width: 90vw;
+      grid-template-areas: 
+        "image"
+        "content";
+        grid-template-columns: 1fr; /* Stack the image and content */
+        grid-template-rows: 1fr 1fr;
+    }
+  
+    .image-container {
+      opacity: 1;
+      grid-area: "image";
+    }
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px; /* Adds rounded corners to the image */
+      object-fit: cover; /* Ensures the image maintains aspect ratio and fills the container */
+      max-width: 100%; /* Prevents the image from overflowing */
+      padding: 0px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adds subtle shadow for better aesthetics */
+    }
+  
+    .content-container {
+      grid-area: "content";
+      padding-bottom: 85vh;
+      opacity: 1;
+    }
+  
+    /* Content text styling */
+    .content-container h1 {
+      transform: translateY(0%);
+      font-size: 4rem;
+      text-align: center;
+      color: #333;
+    }
+  
+    .content-container p {
+      line-height: 1.6;
+      text-align: center;
+      padding: 3rem 5px;
+    }
+  
+    .info-container p {
+      line-height: 1.6;
+      text-align: center;
+      padding-top:13rem;
+      font-size: 1rem;
+    }
+  
+  }
+  
+  @media (min-width: 667px) and (max-width: 1027px) {
+    .nav {
+      display: none; /* Hide nav on mobile */
+    }
+    .resume-section {
+      height: 280vh; /* Increased the overall section height */
+      width: 90vw;
+      grid-template-areas: 
+        "image"
+        "content";
+      grid-template-columns: 1fr; /* Stack the image and content */
+      grid-template-rows: 1fr 1fr;
+    }
+  
+    .image-container {
+      opacity: 1;
+      grid-area: "image";
+    }
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px; /* Adds rounded corners to the image */
+      object-fit: cover; /* Ensures the image maintains aspect ratio and fills the container */
+      max-width: 100%; /* Prevents the image from overflowing */
+      padding: 0px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adds subtle shadow for better aesthetics */
+    }
+    .content-container {
+      opacity: 1;
+      grid-area: "content";
+      padding-left: 40px;
+      padding-right: 40px;
+      
+    }
+    .info-container p {
+      line-height: 1.6;
+      text-align: center;
+      padding-bottom: 6rem; /* Adjusted for better spacing */
+      font-size: 2.5rem; /* Adjusted for better readability */
+    }
+  
+    .content-container p {
+      line-height: 1.6;
+      text-align: center;
+      padding: 0px 2px;
+    }
+  }
+  
+  
+  /* Larger screens: Show the desktop navigation bar */
+  @media (min-width: 1028px) {
+    /* Show the regular buttons on larger screens */
+    .nav {
+      display: flex;
+    }
+    .hamburger-menu {
+        display: none;
+    }
+  
+    .sidebar .nav-button {
+      padding: 0px; /* double padding to fixate the navigation buttons */
+    }
+    .hamburger-menu:has(input:checked) + .sidebar {
+      opacity: 0;
+      display: none;
+  
+    }
+  
+  }

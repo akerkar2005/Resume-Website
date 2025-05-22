@@ -4,19 +4,47 @@
     box-sizing: border-box;
 }
 
+:root {
+  --background-primary: #120818;
+  --text-primary: #cd7cc4e1;
+  --background-secondary: #602d388e;
+  --text-secondary: #f8baa1;
+  --background-tertiary: #f4ebe1;
+  --background-footer: #a453658e;
+
+  --foreground: var(--background-primary);
+  --background: var(--text-secondary);
+  --hamburger-margin: 4px;
+  --animation-timing: 400ms ease-in-out;
+  --hamburger-height: calc(var(--bar-height) * 3 + var(--hamburger-gap) * 2);
+  --x-width: calc(var(--hamburger-height) * 1.41421356237);
+  --stop-y: 10em;
+  --bar-width: 100px;
+  --bar-height: 15px;
+  --hamburger-gap: 10px;
+  
+  
+  --gradient-fg-primary-secondary: linear-gradient(45deg, var(--text-primary), var(--text-secondary)); /* Gradient using variables */
+  --gradient-fg-secondary-tertiary: linear-gradient(45deg, var(--text-secondary), var(--background-tertiary)); /* Gradient using variables */
+  --background-sidebar: #120818c8;
+
+}
+
+
 .main-page-wrapper {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%) scale(0); /* Start at scale 0 */
   width: 0;
   height: 0;
-   overflow: hidden; 
-  opacity: 0;
+  overflow: hidden; 
   z-index: 1; /* Background layer for terminal box */
-  transition: all 0.7s ease-out; /* Smooth animation for scaling */
-  background: #131415ef;
+  transition: all 0.5s ease-out; /* Smooth animation for scaling */
   overscroll-behavior: auto;
+  scroll-behavior: smooth;
 
 }
 
@@ -24,73 +52,24 @@
   transform: translate(-50%, -50%) scale(1); /* Expand to full size */
   width: 100%;
   height: 100%;
-  opacity: 1;
+  overflow: hidden; /* Prevent overflow */
 }
 
 .main-content {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   position: relative;
   z-index: 1;
   overflow-x: hidden;
   overflow-y: scroll;
-  overscroll-behavior: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  background: url('../assets/hexagon.jpg') no-repeat center center fixed;
+  background-color: var(--background-primary);
+  color: var(--text-primary);
   background-size: cover;
-  padding: 0px;
-}
-
-
-.main-content::before {
-  content: '';
-  position: fixed; /* Keeps it fixed to the viewport, not the content */
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.908) no-repeat center center fixed;
-  backdrop-filter: blur(5px);
-  z-index: -1;
-}
-
-
-
-/* Base Sticky Header */
-.sticky-header {
-  background-color: transparent; /* Initially transparent */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); /* Safari */
-  border: transparent;
-  text-align: center;
-  color: #e3e5cd;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  position: fixed;  /* Fix it to the top of the screen */
-  top: 0; /* Start from top */
-  z-index: 1000; /* Ensure it's always on top */
-  width: 100%;
-  height: 100px;
-  padding: 70px 50px;
-  line-height: 80px;
-  box-sizing: border-box;
-  transition: all 0.3s ease-in-out; /* Smooth transition */
-  transform: translateY(0); /* Initially no translation */
-}
-
-/* Adjust header when scrolling quickly */
-.sticky-header.scrolled {
-  transform: translateY(-100%); /* Move the header up when scrolling */
-}
-
-/* Parallax or Zoom effect */
-.sticky-header.zoom {
-  transform: scale(0.9) translateY(0); /* Zoom-out effect */
-}
-
-/* When header is hidden temporarily */
-.sticky-header.hidden {
-  transform: translateY(-120%); /* Fully hide it off-screen */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 0;
+  scroll-behavior: smooth;
 }
 
 /* Optional: Add some transition for the body */
@@ -98,168 +77,17 @@
   transition: margin-top 0.3s ease-in-out;
   margin-top: 0px; /* Ensure body content doesn't overlap header */
 }
-
   
-.nav {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.nav-button {
-  list-style-type: none;
-  margin: 0px;
-  padding: 0px;
-  display: flex;
-}
-
-.hover-btn {
-  border: none;
-  cursor: pointer;
-}
-
-.hover-btn a:hover {
-  transition: color 1s ease;
-}
-
-/* Container for hamburger icon */
-.hamburger-menu {
-  display: flex;
-  flex-direction: column;
-  gap: var(--hamburger-gap); /* Adjust gap between bars */
-  cursor: pointer;
-  justify-content: center;
-  align-items: center;
-  position:absolute;
-  top: 50px;
-  right: 10px;
-  z-index: 2;
-}
-.hamburger-menu:has(input:checked) {
-  --foreground: #000000;
-  --background: #493c20;
-}
-.hamburger-menu:has(input:focus-visible)::before,
-.hamburger-menu:has(input:focus-visible)::after,
-.hamburger-menu input:focus-visible {
-  border: 1px solid var(--background);
-  box-shadow: 0 0 0 1px var(--foreground);
-}
-
-/* Creating the bars of the hamburger */
-.hamburger-menu::before,
-.hamburger-menu::after,
-.hamburger-menu input {
-  content: "";
-  width: var(--bar-width); /* Width of each bar */
-  height: var(--bar-height); /* Height of each bar */
-  background-color: var(--foreground); /* color for the bars */
-  border-radius: 9999px;
-  transform-origin: left center;
-  transition: opacity var(--animation-timing), width var(--animation-timing), 
-              rotate var(--animation-timing), translate var(--animation-timing),
-              background-color var(--animation-timing); /* Smooth transition for animation */
-}
-
-/* Remove input appearance and reset margin */
-.hamburger-menu input {
-  appearance: none;
-  padding: 0;
-  margin: 0;
-  outline: none;
-  pointer-events: none; /* Prevent interaction with the checkbox directly */
-}
-.hamburger-menu:has(input:checked)::before {
-  rotate: 45deg;
-  width: var(--x-width);
-  translate: 0 calc(var(--bar-height) / -2);
-}
-
-.hamburger-menu:has(input:checked)::after {
-  rotate: -45deg;
-  width: var(--x-width);
-  translate: 0 calc(var(--bar-height)/ 2);
-}
-
-.hamburger-menu input:checked {
-  opacity: 0;
-  width: 0;
-}
-
-.sidebar {
-  position: absolute;
-  pointer-events: none;
-  display: flex;
-  top: 0;
-  right: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: var(--foreground);
-  color: var(--background);
-  opacity: 0;
-  transition: all var(--animation-timing); /* Sync opacity and transform */
-  padding-top: calc(var(--hamburger-height) + var(--hamburger-margin));
-  z-index: 1;
-}
-
-.hamburger-menu:has(input:checked) + .sidebar {
-  pointer-events: all;
-  background-color: var(--foreground);
-  align-items: center;
-  opacity: 1;
-}
-
-.sidebar .nav-button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px; /* Space between buttons */
-  margin: 0px;
-  padding: 0px 90px;
-  list-style: none;
-  transition: all var(--animation-timing);
-}
-
-.sidebar .hover-btn {
-  margin-left: 40px;
-  font-size: 30px;
-  background-clip: padding-box; /* Ensure the background doesn't clip the border */
-  background: linear-gradient(45deg, #ae2b4a95, #eb725d); /* Gradient colors */
-  -webkit-background-clip: text; /* Clip the gradient to the text */
-  -webkit-text-fill-color: transparent; /* Make the text transparent so the gradient shows */
-  color: transparent; /* Make the text transparent for gradient application */  
-  transition: all var(--animation-timing);
-  cursor: pointer;
-  border-radius: 5px;
-  width: auto;
-  text-decoration: none;
-  font-weight: bold;
-}
-  
-  
-/* Animate the background to move */
-@keyframes northernLightsAnimation {
-  0% {
-      background-position: 0% 0%;
-  }
-  25% {
-      background-position: 100% 0%;
-  }
-  50% {
-      background-position: 0% 100%;
-  }
-  75% {
-      background-position: 100% 100%;
-  }
-  100% {
-      background-position: 0% 0%;
-  }
-}
 
 
 .resume-section {
   position: relative; /* Ensure the container is the reference for pseudo-elements */
-  background: linear-gradient(135deg, rgba(0, 10, 25, 1) 0%, rgba(0, 10, 25, 1) 30%, rgb(9, 39, 57) 50%, rgb(0, 80, 13) 70%, rgb(44, 175, 5) 100%);
-  animation: northernLightsAnimation 20s ease-in-out infinite;
+  background: var(--background-secondary);
+  color: var(--text-primary);
+  backdrop-filter: blur(5000px); /* This can cause transparency */
+  -webkit-filter: blur(0.5px);
+  filter: blur(0.5px);
+  z-index: 1;
   top: 0px;
   height: 80vh;
   overflow: hidden;
@@ -275,61 +103,6 @@
   margin-bottom: 60px;
   border-radius: 10px;
   gap: 20px; /* Space between the image and content */
-}
-
-
-/* Keyframes for the shine effect */
-@keyframes shine {
-  0% {
-      transform: translateX(-100%);
-  }
-  100% {
-      transform: translateX(100%);
-  }
-}
-
-
-/* Dance effect: rotate left and right */
-@keyframes dance {
-  0% {
-      transform: rotate(-40deg) scale(1.4);
-  }
-  100% {
-      transform: rotate(40deg) scale(0.8);
-  }
-}
-
-
-/* Star styles */
-.star {
-  --small-star: 5px;
-  --med-star: 10px;
-  --large-star: 15px;
-  position: absolute;
-  opacity: 0.5;
-  width: 10px; /* Adjust size as needed */
-  height: 10px;
-  background: radial-gradient(
-      circle,
-      rgba(255, 255, 255, 0.982) 0%,
-      rgba(250, 247, 242, 0.192) 70%,
-      transparent 100%
-  );
-  animation: twinkle 1s infinite ease-in-out, dance 1s infinite alternate; /* Twinkling animation */
-  opacity: 0.8;
-}
-
-.star.small {
-    width: var(--small-star);
-    height: var(--small-star);
-}
-.star.medium {
-    width: var(--med-star);
-    height: var(--med-star);
-}
-.star.large {
-    width: var(--large-star);
-    height: var(--large-star);
 }
 
 
@@ -368,22 +141,19 @@
   text-align: center;
   align-items: center;
   z-index: 1;
-  backdrop-filter: blur(2px); /* Apply the frosted glass effect */
-  -webkit-backdrop-filter: blur(2px); /* For Safari */
   grid-area: content;
   overflow-y: auto; /* Makes the content scrollable if it overflows */
   overflow-x: auto;
-  background: #151010aa; /* Light background for contrast */
+  background: transparent; /* Light background for contrast */
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.893); /* Subtle shadow */
 }
 
 .color1 {
-  color: #2d2e2d;
+  color: var(--text-secondary);
 }
 
 .color2 {
-  color: #CEB888;
+  color: var(--text-primary);
 }
 
 /* Content text styling */
@@ -392,305 +162,126 @@
   transform: translateY(-4rem);
   word-wrap: break-word;              /* Allow long words to break onto new lines */
   overflow-wrap: break-word;          /* Same as word-wrap, for modern browsers */
-  align: center;
-  color: #333;
+  color: #000000;
 }
 
 .content-container p {
   margin: 0;                          /* Remove default margin */
   font-size: 1.1rem;                  /* Adjust font size */
-  color: #555;                        /* Set text color */
+  color: var(--text-secondary);         /* Set text color */
   word-wrap: break-word;              /* Allow long words to break onto new lines */
   overflow-wrap: break-word;          /* Same as word-wrap, for modern browsers */
-  margin-top: -20rem;
+  transform: translateY(-12vh);
+  /* font-weight: bold; */
   white-space: pre-line;
+  padding: 0px 30px;
   line-height: 2.3;
 }
 
-    /* Content container */
+/* titles container */
 .info-container {
   display: flex;
   height: 100%;
   text-align: center;
   align-items: center;
   z-index: 1;
-  gap: 7rem;
-  padding: 7rem;
-  margin-top: -30rem;
+  transform: translateY(-3vh);
+  padding: 0px 0px;
   border-radius: 10px;
 }
+
+
     
   
 .info-container p {
   margin: 0;                          /* Remove default margin */
   font-size: 1.2rem;                  /* Adjust font size */
-  color: #555;                        /* Set text color */
+  color: var(--text-primary);                        /* Set text color */
   word-wrap: break-word;              /* Allow long words to break onto new lines */
   overflow-wrap: break-word;          /* Same as word-wrap, for modern browsers */
 }
-  
 
-
-@media (max-width: 1024px) {
-  .nav {
-    display: none; /* Hide nav on mobile */
-  }
-
-  .main-content {
-    height: 100vh;
-    width: 100vw;
-    overflow-y: auto;
-  }
-  .main-content::before {
-    height: 200vh;
-  }
-  .resume-section {
-    height: 100vh;
-    width: 90vw;
-    grid-template-areas: 
-      "image"
-      "content";
-    grid-template-columns: 1fr; /* Stack the image and content */
-    padding-bottom: 175vh;
-  }
-
-  .image-container {
-    opacity: 1;
-    margin-bottom: 85vh; /* Adds space between stacked elements */
-  }
-  .image-container img {
-    width: 100%;
-    height: 100%;
-    border-radius: 10px; /* Adds rounded corners to the image */
-    object-fit: cover; /* Ensures the image maintains aspect ratio and fills the container */
-    max-width: 100%; /* Prevents the image from overflowing */
-    padding: 0px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adds subtle shadow for better aesthetics */
-  }
-
-  .content-container {
-      padding-bottom: 85vh;
-  }
-  /* Content text styling */
-  .content-container h1 {
-    margin-top: 1;
-    font-size: 4rem;
-    text-align: center;
-    align: center;
-    color: #333;
-  }
-  
-  .content-container p {
-    line-height: 1.6;
-    text-align: center;
-    color: #555;
-  }
-  
-  .hamburger-menu {
-    display: flex;
-  }
-  .sidebar .hover-btn {
-    font-size: calc(20vw - 20px);
-    transform: scale(0.9);
-    margin-left: -3vw;
-  }
-  .sidebar .hover-btn.active {
-    font-size: calc(20vw - 20px);
-    transform: scale(0.9);
-    margin-left: -3vw;
-  }
-  .hamburger-menu:has(input:checked) + .sidebar .hover-btn {
-    font-size: calc(20vw - 20px);
-    transform: scale(0.9);
-    margin-left: -3vw;
-  }
-  .sidebar .nav-button {
-    padding: 90vh 90px; /* double padding to fixate the navigation buttons */
-  }
+.footer {
+  position: relative;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* Safari */
+  background: var(--background-footer);
+  top: 0px;
+  height: 17vh;
+  width: 100vw;
+  overflow: hidden; /* Prevent content overflow */
+  box-shadow: inset 10px 10px 40px rgba(0, 0, 0, 0.5);
+  display: flex;
+  margin-top: auto;
+  justify-content: space-between; /* Space between icons */
+  align-items: center; /* Vertically center icons */
+  padding: 0 20vw 0 10vw; /* Padding only to the right (0 top, 20vw right, 0 bottom, 10vw left) */
+  flex-grow: 1;
 }
 
-/* specific lower-bounded actions for a decent width while also maintaining mobile-friendliness...  */
-/* This has low precedence so these rules could be changed easily for later properties */
-@media (min-width: 540px) {
-  .sidebar .hover-btn {
-    font-size: calc(22vw);
-    transform: scale(0.7);
-    margin-left: -3vw;
-  }
-  .sidebar .hover-btn.active {
-    font-size: calc(22vw);
-    transform: scale(0.7);
-    margin-left: -3vw;
-  }
-
-  .hamburger-menu:has(input:checked) + .sidebar .hover-btn {
-    font-size: calc(22vw);
-    transform: scale(0.7);
-    margin-left: -3vw;
-  }
-  .hamburger-menu:has(input:checked) + .sidebar .hover-btn.active {
-    font-size: calc(22vw);
-    transform: scale(0.7);
-    margin-left: -3vw;
-  }
-  .sidebar .nav-button {
-    padding: 90vh 90px; /* double padding to fixate the navigation buttons */
-  }
+.rights {
+  position: relative;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-secondary);
+  font-weight: bold;
+  font-size: 1.8rem;
+  height: 50%;
+  width: 20vw;
+  margin: 0;
+  z-index: 2;
+  box-sizing: border-box;
 }
 
-/* specific actions for such a large width while also maintaining mobile-friendliness...  */
-/* this will apply to iPad Pro only!! */
-@media (width: 1024px) {
-  .sidebar .hover-btn {
-    font-size: calc(22vw);
-    transform: scale(0.7);
-  }
-  .sidebar .hover-btn.active {
-    font-size: calc(22vw);
-    transform: scale(0.7);
-  }
-  .hamburger-menu:has(input:checked) + .sidebar .hover-btn {
-    background-color: rgba(0, 0, 0, 0.1); /* Subtle background on hover */
-    font-size: calc(22vw);
-    transform: scale(0.7);
-  }
-  .hamburger-menu:has(input:checked) + .sidebar .hover-btn.active {
-    background-color: rgba(0, 0, 0, 0.1); /* Subtle background on hover */
-    font-size: calc(22vw);
-    transform: scale(0.7);
-  }
-  .sidebar .nav-button {
-    padding: 90vh 90px; /* double padding to fixate the navigation buttons */
-  }
+.icon {
+  position: relative;
+  background-image: url('../assets/github-mark.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain; /* Ensure image scales appropriately */
+  height: 80px; /* Scaled to fit parent */
+  width: 80px; /* Maintain aspect ratio */
+  margin: 0;
+  z-index: 2;
+  transition: 0.2s ease-in-out;
 }
 
-/* specific actions for such a small width while also maintaining mobile-friendliness...  */
-/* this configuration will apply to Surface Duo */
-@media (width: 540px) {
-  .sidebar .hover-btn {
-    font-size: calc(18vw);
-    transform: scale(0.7);
-  }
-  .sidebar .hover-btn.active {
-    font-size: calc(18vw);
-    transform: scale(0.7);
-  }
-  .hamburger-menu:has(input:checked) + .sidebar .hover-btn {
-    font-size: calc(18vw);
-    transform: scale(0.7);
-  }
-  .hamburger-menu:has(input:checked) + .sidebar .hover-btn.active {
-    font-size: calc(18vw);
-    transform: scale(0.7);
-  }
-  .hamburger-menu:has(input:checked) + .sidebar .hover-btn {
-    font-size: calc(18vw);
-    transform: scale(0.7);
-  }
-  .sidebar .nav-button {
-    padding: 90vh 90px; /* double padding to fixate the navigation buttons */
-  }
+.icon:hover {
+  filter: hue-rotate(180deg) brightness(5);
 }
 
-/* specific actions for such a small height while also maintaining mobile-friendliness...  */
-/* this should only apply to Nest Hub. */
-@media (height: 600px) {
-  .main-content {
-    height: 100vh;
-    width: 100vw;
-    overflow-y: auto;
-  }
-
-  .main-content::before {
-    height: 400vh;
-  }
-  .resume-section {
-    height: 100vh;
-    width: 90vw;
-    grid-template-areas: 
-      "image"
-      "content";
-    grid-template-columns: 1fr; /* Stack the image and content */
-    padding-bottom: 350vh;
-  }
-
-  .image-container {
-    opacity: 1;
-    margin-bottom: 170vh; /* Adds space between stacked elements */
-  }
-
-  .content-container {
-      padding-bottom: 170vh;
-  }
-  
-  .sidebar .hover-btn.active {
-    transform: scale(0.9);
-    font-size: 7vw;
-    margin-left: 28vw;
-  }
-
-  .sidebar .hover-btn {
-    transform: scale(0.9);
-    font-size: 7vw;
-    margin-left: 28vw;
-  }
-  .hamburger-menu:has(input:checked) + .sidebar .hover-btn {
-    transform: scale(0.9);
-    font-size: 7vw;
-    margin-left: 28vw;
-  }
-  .hamburger-menu:has(input:checked) + .sidebar .hover-btn.active {
-    transform: scale(0.9);
-    font-size: 7vw;
-    margin-left: 28vw;
-  }
-  .sidebar .nav-button {
-    padding: 90vh 90px; /* double padding to fixate the navigation buttons */
-  }
+.icon:active {
+  transform: scale(1.5); /* Adds a "pressed" effect */
 }
 
-/* Larger screens: Show the desktop navigation bar */
-@media (min-width: 1025px) {
-  /* Show the regular buttons on larger screens */
-  .nav {
-    display: flex;
-  }
-  .hamburger-menu {
-      display: none;
-  }
+.linkedin {
+  position: relative;
+  text-decoration: none;
+  display: flex; /* Center content inside the button */
+  justify-content: center;
+  align-items: center;
+  background: #0077B5;
+  color: white;
+  font-weight: bold;
+  font-size: 4.5rem; /* Adjust font size for better scaling */
+  height: 80px;
+  width: 80px; /* Increase width for better alignment */
+  margin: 0;
+  z-index: 2;
+  border-radius: 5px;
+  box-sizing: border-box; /* Ensure padding doesn't affect size */
+  transition: 0.2s ease-in-out;
 
-  .sidebar .nav-button {
-    padding: 0px; /* double padding to fixate the navigation buttons */
-  }
-  .sidebar .hover-btn {
-    font-size: 0;
-    transform: scale(1);
-  }
-  .sidebar .hover-btn.active {
-    font-size: 0;
-    transform: scale(1);
-  }
+}
 
-  .hamburger-menu:has(input:checked) + .sidebar .hover-btn {
-    font-size: 0;
-    transform: scale(1);
-  }
-  .hamburger-menu:has(input:checked) + .sidebar .hover-btn.active {
-    font-size: 0;
-    transform: scale(1);
-  }
+.linkedin:hover {
+  pointer-events: auto;
+  background: white;
+  color: #0077B5;
+}
 
-  .image-container {
-    margin-bottom: 0px; /* Adds space between stacked elements */
-  }
-  .image-container img {
-    max-width: 100%; /* Prevents the image from overflowing */
-    padding: 0px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adds subtle shadow for better aesthetics */
-  }
-
-  .content-container {
-      padding-bottom: 0px;
-  }
-  
+.linkedin:active {
+  transform: scale(1.5); /* Adds a "pressed" effect */
 }

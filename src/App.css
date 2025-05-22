@@ -6,7 +6,7 @@
   flex-direction: column; /* Ensure children stack vertically */
   align-items: center;
   background-image: url('./assets/wallpaper.jpg'); /* Adjust the path accordingly */
-  color:black;
+  color: black;
 
 }
 
@@ -42,12 +42,5 @@
   font-family: "Helvetica";
   font-weight: bolder;
 }
-
-.home-seg-container {
-  grid-row: 2; /* Place it in the second row */
-  background-color: #cf7243; /* Background color for the container */
-  padding: 0px; /* Add padding if needed */
-}
-
 
 

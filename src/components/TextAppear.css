@@ -1,3 +1,19 @@
+:root {
+    --background-primary: #120818;
+    --text-primary: #cd7cc4e1;
+    --background-secondary: #602d388e;
+    --text-secondary: #f8baa1;
+    --background-tertiary: #f4ebe1;
+    --background-footer: #a453658e;
+    --header-background: #2f2f2f;
+    --header-text: #b1b1b1;
+    
+    
+    --gradient-fg-primary-secondary: linear-gradient(45deg, var(--text-primary), var(--text-secondary)); /* Gradient using variables */
+    --gradient-fg-secondary-tertiary: linear-gradient(45deg, var(--text-secondary), var(--background-tertiary)); /* Gradient using variables */
+    --background-sidebar: #120818c8;
+  }
+
 /* Terminal Wrapper: Start from center */
 .terminal-wrapper {
     position: absolute;
@@ -29,7 +45,7 @@
     left: 0;
     width: 100%;
     height: 30px;
-    background-color: #282f31;
+    background-color: var(--header-background);
     cursor: move;
     color: white;
     padding: 10px 10px;
@@ -47,35 +63,21 @@
     font-family: 'Courier New', Courier, monospace;
     flex-grow: 1;  /* Allow this to grow and take up available space */
     text-align: center;
-    color:#7095a0;
+    color:var(--header-text);
 }
 
-/* Window buttons inside the terminal header */
-.window-buttons {
-    display: flex;
-    gap: 9px;
+.terminal-icon {
+    width: 80px;
+    height: 19px;
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    transition: transform 0.3s ease;
+    background-size: contain; /* Ensure the image fits within the element */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center; /* Center the image within the element */
 }
 
-.window-button {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: #ff605c; /* Close button */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.window-button:nth-child(2) {
-    background-color: #ffbd3b; /* Minimize button */
-}
-
-.window-button:nth-child(3) {
-    background-color: #4cd964; /* Maximize button */
-}
-
-.window-button:hover {
-    background-color: #ff3b30; /* Change color on hover */
-}
 
 /* Terminal Box: The body of the terminal */
 .terminal-box {
@@ -111,14 +113,14 @@
 }
 
 /* Mobile responsiveness */
-@media (max-width: 768px) {
+@media (min-width: 300px) and (max-width: 538px) {
     .terminal-wrapper.expanded {
         width: 95vw;
         height: 70vh;
     }
 
     .terminal-box {
-        font-size: 14px;
+        font-size: 10px;
         line-height: 22px;
     }
     .cursor {
@@ -131,6 +133,6 @@
     
 
     .terminal-header {
-        font-size: 18px;
+        font-size: 14px;
     }
 }

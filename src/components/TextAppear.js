@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './TextAppear.css';
+import TermHeader from './TerminalHeader.js';
 
 function TextAppear({ commands = [], onComplete }) {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -12,6 +13,7 @@ function TextAppear({ commands = [], onComplete }) {
     const [isComplete, setIsComplete] = useState(false); // New state to track completion
     const textRef = useRef(null);
     const intervalRef = useRef(null);
+    const [isHovered, setIsHovered] = useState(false);
 
 
     // Helper function for delay
@@ -46,15 +48,17 @@ function TextAppear({ commands = [], onComplete }) {
                 console.log("current: " + currentIndex);
                 const { message = '', type } = commands[currentIndex];
 
-                if (currentIndex === 3) {
+                if ((currentIndex === 3 && commands.length != 10) || (currentIndex === 2 && commands.length === 10)) {
                     setCurrentText('');
-                    setDirectory('akerkar@data:~$ ');
+                    setDirectory('atharva@data:~$ ');
                     await delay(800);
                 }
-                if (currentIndex === 4) {
-                    setDirectory('akerkar@data:~/akerkar/menu$ ');
+                
+                if ((currentIndex === 4 && commands.length != 10) || (currentIndex === 3 && commands.length === 10)) {
+                    setDirectory('atharva@data:~/atharva/menu$ ');
                 }
-                if (currentIndex === 7) {
+
+                if ((currentIndex === 7 && commands.length != 10) || (currentIndex === 6 && commands.length === 10)) {
                     await delay(2500);
                 }
 
@@ -83,8 +87,8 @@ function TextAppear({ commands = [], onComplete }) {
                         onComplete()
                     }
                 }
-                if (currentIndex === 3) {
-                    setHeaderTitle('ssh akerkar@data.cs.purdue.edu');
+                if ((currentIndex === 3 && commands.length != 10) || (currentIndex === 2 && commands.length === 10)) {
+                    setHeaderTitle('ssh atharva@data');
                 }
 
                 isProcessingRef.current = false; // Unlock execution
@@ -147,14 +151,7 @@ function TextAppear({ commands = [], onComplete }) {
 
     return (
         <div className={`terminal-wrapper ${isExpanded ? 'expanded' : ''}`}>
-            <div className="terminal-header">
-                <div className="window-buttons">
-                    <div className="window-button"></div> {/* Close button */}
-                    <div className="window-button"></div> {/* Minimize button */}
-                    <div className="window-button"></div> {/* Maximize button */}
-                </div>
-                <div className="header-title">{headerTitle}</div> {/* Dynamically update the header */}
-            </div>
+            <TermHeader headerTitle={headerTitle} />
             <div className="terminal-box">
                 {texts.map((t, index) => (
                     <p key={index} style={{ margin: 0 }}>{t}</p> // Each command on a new line
