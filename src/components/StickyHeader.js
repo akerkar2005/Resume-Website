@@ -194,6 +194,12 @@ function StickyHeader({ bodyRef, setIsComplete }) {
                         >
                             Projects
                         </button>
+                        <button
+                            className={`hover-btn ${location.pathname === '/182' ? 'active' : ''}`}
+                            onClick={on182Click}
+                        >
+                            182
+                        </button>
                     </ul>
                 </aside>
             </nav>

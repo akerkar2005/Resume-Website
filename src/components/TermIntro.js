@@ -45,9 +45,8 @@ function TermIntro() {
     const message2 = 'cd ~/atharva/menu';
     const message3 = 'ls -la';
     const output3 = '-rw-r--r--@   1 atharva  staff     2307497 Nov 14 22:31 (8) Home.html\n' +
-        '-rw-r--r--@   1 atharva  staff     2307497 Nov 14 22:32 (8) Skills.html\n' +
         '-rw-r--r--@   1 atharva  staff     2307497 Nov 14 22:32 (8) Projects.html\n' +
-        '-rw-r--r--@   1 atharva  staff     2307497 Nov 14 22:33 (8) Contact.html\n';
+        '-rw-r--r--@   1 atharva  staff     2307497 Nov 14 22:33 (8) 182.html\n';
     const message4 = 'echo -e \"\\033[2J\\033[H\"';
     const finalmsgopen = 'open Home.html';
 

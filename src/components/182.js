@@ -192,7 +192,7 @@ function Page182({ onExpand }) {
   return (
     <div className={`main-page-wrapper ${isExpanded ? 'expanded' : ''}`}>
       <TermHeader headerTitle={title} />
-      <div ref={bodyRef} className="contact-content">
+      <div ref={bodyRef} className="background-with-content">
         <StickyHeader
           bodyRef={bodyRef}
           setIsComplete={setIsComplete}
