@@ -68,13 +68,26 @@ function StickyHeader({ bodyRef, setIsComplete }) {
         requestAnimationFrame(animation);
     };
 
-
-    // Handle navigation to Skills page
-    const onSkillClick = () => {
-        if (location.pathname != '/skills') {
+    const on182Click = () => {
+        if (location.pathname !== '/182') {
             setIsComplete(true);
             setTimeout(() => {
-                navigate('/skills');
+                navigate('/182');
+            }, 600); // Match the collapse duration
+        }
+        else {
+            const targetElement = bodyRef?.current || document.documentElement;
+            smoothScrollTo(targetElement, 0);
+        }
+    };
+
+
+    // Handle navigation to Projects page
+    const onProjectClick = () => {
+        if (location.pathname !== '/projects') {
+            setIsComplete(true);
+            setTimeout(() => {
+                navigate('/projects');
             }, 600); // Match the collapse duration
         }
         else {
@@ -84,7 +97,7 @@ function StickyHeader({ bodyRef, setIsComplete }) {
     };
 
     const onHomeClick = () => {
-        if (location.pathname != '/home') {
+        if (location.pathname !== '/home') {
             setIsComplete(true);
             setTimeout(() => {
                 navigate('/home');
@@ -132,47 +145,58 @@ function StickyHeader({ bodyRef, setIsComplete }) {
                         Home
                     </button>
                     <button
-                        className={`hover-btn ${location.pathname === '/skills' ? 'active' : ''}`}
-                        onClick={onSkillClick} // Call the skill click handler
-                    >
-                        Skills
-                    </button>
-                    <button
                         className={`hover-btn ${location.pathname === '/projects' ? 'active' : ''}`}
-                        onClick={() => navigate('/projects')}
+                        onClick={onProjectClick} // Call the skill click handler
                     >
                         Projects
+                    </button>
+                    <button
+                        className={`hover-btn ${location.pathname === '/182' ? 'active' : ''}`}
+                        onClick={on182Click}
+                    >
+                        182
                     </button>
                 </div>
             </nav>
-            <label className="hamburger-menu" ref={hamburgerRef}>
-                <input
-                    type="checkbox"
-                    onChange={(e) => setIsMenuOpen(e.target.checked)} // Update menu state
-                />
-            </label>
-            <aside className="sidebar" ref={sidebarRef}>
-                <ul className="nav-button">
-                    <button
-                        className={`hover-btn ${location.pathname === '/home' ? 'active' : ''}`}
-                        onClick={onHomeClick}
-                    >
-                        Home
-                    </button>
-                    <button
-                        className={`hover-btn ${location.pathname === '/skills' ? 'active' : ''}`}
-                        onClick={onSkillClick}
-                    >
-                        Skills
-                    </button>
-                    <button
-                        className={`hover-btn ${location.pathname === '/projects' ? 'active' : ''}`}
-                        onClick={() => navigate('/projects')}
-                    >
-                        Projects
-                    </button>
-                </ul>
-            </aside>
+            <nav className="mobile-nav">
+                <button
+                    className="hover-btn left-icon"
+                    onClick={onHomeClick}
+                >
+                    <img
+                        src= {ahhh}
+                        alt="Face"
+                        className="background-image"
+                    />
+                    <img
+                        src= {face}
+                        alt="Face"
+                        className="nav-icon"
+                    />
+                </button>
+                <label className="hamburger-menu" ref={hamburgerRef}>
+                    <input
+                        type="checkbox"
+                        onChange={(e) => setIsMenuOpen(e.target.checked)} // Update menu state
+                    />
+                </label>
+                <aside className="sidebar" ref={sidebarRef}>
+                    <ul className="nav-button">
+                        <button
+                            className={`hover-btn ${location.pathname === '/home' ? 'active' : ''}`}
+                            onClick={onHomeClick}
+                        >
+                            Home
+                        </button>
+                        <button
+                            className={`hover-btn ${location.pathname === '/projects' ? 'active' : ''}`}
+                            onClick={onProjectClick}
+                        >
+                            Projects
+                        </button>
+                    </ul>
+                </aside>
+            </nav>
         </div>
     );
 }

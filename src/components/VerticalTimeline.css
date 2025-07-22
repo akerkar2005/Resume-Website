@@ -1,0 +1,376 @@
+.vertical-timeline-scroll {
+  padding: 24px 0;
+  position: relative;
+  height: 100%;
+  max-height: none;
+  overflow: visible;
+}
+.vertical-timeline-scroll.left-aligned {
+  width: 30vw;
+  min-width: 120px;
+  max-width: 320px;
+  padding: 20px 0;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  height: 100%;
+  max-height: none;
+  overflow: visible;
+}
+.vertical-timeline-line {
+  position: relative;
+  margin: 0 auto;
+  width: 60px;
+  min-height: 100%;
+  border-left: 3px solid #bbb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.vertical-timeline-line.left-aligned-line {
+  position: relative;
+  margin-left: 5vw;
+  margin-right: auto;
+  width: 60px;
+  min-height: 100%;
+  border-left: 3px solid #bbb;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.vertical-timeline-line::before,
+.left-aligned-line::before {
+  /* Make sure the line uses the custom property for height */
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: var(--timeline-line-start, 0);
+  width: 4px;
+  background: #e6ec27;
+  height: var(--timeline-line-height, 100%);
+  border-radius: 2px;
+  transform: translateX(-50%);
+  z-index: 0;
+}
+.timeline-item {
+  position: relative;
+  margin: 32px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.timeline-item.left-aligned-item {
+  position: relative;
+  margin: 50px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+.timeline-dot {
+  width: 22px;
+  height: 22px;
+  background: #222;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  cursor: pointer;
+  z-index: 2;
+  transition: box-shadow 0.2s;
+}
+.timeline-dot:hover {
+  box-shadow: 0 0 0 4px #90caf9;
+}
+.timeline-label {
+  margin-top: 10px;
+  text-align: center;
+  width: 80px;
+}
+.timeline-label.left-aligned-label {
+  margin-top: 0;
+  margin-left: 0;
+  text-align: left;
+  width: 100px;
+  position: relative;
+  left: -9px;
+}
+.timeline-title {
+  font-size: 2em;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.timeline-date {
+  font-size: 0.8em;
+  color: #888;
+  margin-top: 2px;
+}
+.timeline-popup-outer {
+  position: relative;
+  width: 70vw;
+  min-width: 200px;
+  max-width: 100vw;
+  height: 100%;
+  pointer-events: none;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: flex-start;
+}
+.timeline-popup-vertical {
+  width: 100%;
+  min-width: 0;
+  max-width: 100vw;
+  background: #46035e73;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.13);
+  padding: 48px 80px 40px 80px;
+  min-width: 600px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  animation: fadeIn 0.15s forwards;
+  transition: opacity 0.18s cubic-bezier(.4,0,.2,1);
+  position: absolute;
+  left: -50px;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  opacity: 1;
+  transition: opacity 0.18s cubic-bezier(.4,0,.2,1);
+}
+.popup-rotate-out {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s cubic-bezier(.4,0,.2,1);
+}
+.timeline-popup-title {
+  font-size: 3em;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: #ef95e4e1;
+  word-break: break-word;
+}
+.timeline-popup-desc {
+  font-size: 1.15em;
+  color: #ffffff;
+  margin-bottom: 32px;
+  max-width: 95%;
+  word-break: break-word;
+}
+.timeline-popup-img {
+  width: 128px;
+  height: 128px;
+  object-fit: contain;
+  border-radius: 12px;
+  align-self: center;
+  margin-top: 0;
+  animation: ease-in-out 0.5s;
+  transition: transform 0.5s cubic-bezier(.4,0,.2,1);
+}
+.timeline-popup-img:hover {
+  transform: translateY(-5px);
+}
+/* Hide the old popup styles */
+.timeline-popup,
+.timeline-popup.right-popup {
+  display: none !important;
+}
+.timeline-encapsulated-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 350px;
+  max-width: 100vw;
+  padding: 100px 0;
+  height: 100%;
+}
+
+.timeline-year-boundary,
+.timeline-special-boundary {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 36px 0 10px 0;
+  position: relative;
+  min-height: 60px;
+}
+.timeline-year-horizontal,
+.timeline-special-horizontal {
+  height: 3px;
+  background: #bbb;
+  border-radius: 2px;
+  margin-right: 12px;
+  margin-left: -2px;
+  display: inline-block;
+  flex-shrink: 0;
+  width: 32px;
+}
+.timeline-year-label,
+.timeline-special-label {
+  font-size: 4em;
+  font-weight: 800;
+  color: #ef95e4e1;
+  background: #602d3800;
+  padding: 4px 18px;
+  border-radius: 16px;
+  margin-left: 0;
+  border: 2px solid #cd7cc400;
+  z-index: 1;
+  display: inline-block;
+}
+/* Ensure present uses the same style as all other timeline-year-labels */
+.present-boundary .timeline-year-label {
+  color: #ef95e4e1;
+  background: #602d3800;
+  border: 2px solid #cd7cc400;
+  box-shadow: none;
+}
+.present-boundary .timeline-year-horizontal {
+  transition: transform 0.2s;
+}
+.timeline-icon {
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56px;
+  border-radius: 50%;
+  background: none !important;
+  border: 3px solid transparent;
+  cursor: pointer;
+  margin-left: -50px;
+  margin-right: 20px;
+  box-shadow: 0 2px 12px 0 rgba(25, 118, 210, 0.18);
+  transition: border 0.2s, box-shadow 0.2s;
+  z-index: 2;
+}
+.timeline-icon:focus,
+.timeline-icon:hover {
+  border: 3px solid #ef95e4e1;
+  box-shadow: 0 0 0 10px #ef95e4a0;
+  outline: none;
+  background: none !important;
+}
+.timeline-icon img {
+  width: 100%;
+  height: 100%;
+  max-width: 64px;
+  max-height: 64px;
+  min-width: 40px;
+  min-height: 40px;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px #1976d2aa);
+}
+.timeline-special-boundary {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 18px 0 0 0;
+  position: relative;
+  min-height: 32px;
+}
+.timeline-special-horizontal {
+  height: 3px;
+  background: #bbb;
+  border-radius: 2px;
+  margin-right: 12px;
+  margin-left: -2px;
+  display: inline-block;
+  flex-shrink: 0;
+  /* This will be set to match the horizontal line for year labels */
+  width: 32px;
+}
+.timeline-special-label {
+  font-size: 1.2em;
+  font-weight: 700;
+  color: #fff;
+  background: #1976d2;
+  padding: 2px 18px;
+  border-radius: 12px;
+  margin-left: 0;
+  letter-spacing: 0.1em;
+  border: 2px solid #1976d2;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+  display: inline-block;
+}
+/* Remove the connector vertical lines under year labels */
+.timeline-year-connector {
+  display: none !important;
+}
+.timeline-year-connector-line {
+  display: none !important;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+/* Mobile styles */
+@media (max-width: 900px) {
+  .timeline-encapsulated-container {
+    flex-direction: row;
+    min-height: 0;
+    height: auto;
+    width: 100vw;
+    max-width: 100vw;
+  }
+  .vertical-timeline-scroll.left-aligned {
+    width: 30vw;
+    min-width: 0;
+    max-width: 30vw;
+    padding: 10px 0;
+    height: 100vh;
+    align-items: flex-start;
+  }
+  .vertical-timeline-line,
+  .vertical-timeline-line.left-aligned-line {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .timeline-popup-outer {
+    width: 70vw;
+    min-width: 0;
+    max-width: 70vw;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    display: block;
+    position: relative;
+    margin-top: 0;
+    z-index:5;
+  }
+  .timeline-popup-vertical {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding: 24px 4vw 24px 4vw;
+    box-sizing: border-box;
+    position: relative;
+    transform: none;
+    min-width: 0;
+  }
+  .timeline-year-label,
+  .timeline-special-label {
+    font-size: 2em;
+    padding: 4px 10px;
+  }
+  .timeline-title {
+    font-size: 1.2em;
+  }
+  .timeline-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    margin-left: -10px;
+    margin-right: 8px;
+  }
+  .timeline-label.left-aligned-label {
+    width: 60vw;
+    left: 0;
+    font-size: 1em;
+  }
+}

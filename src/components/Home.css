@@ -10,7 +10,7 @@
   --background-secondary: #602d388e;
   --text-secondary: #f8baa1;
   --background-tertiary: #f4ebe1;
-  --background-footer: #a453658e;
+  --background-footer: #3730448e;
 
   --foreground: var(--background-primary);
   --background: var(--text-secondary);
@@ -82,7 +82,7 @@
 
 .resume-section {
   position: relative; /* Ensure the container is the reference for pseudo-elements */
-  background: var(--background-secondary);
+  background: var(--background-primary);
   color: var(--text-primary);
   backdrop-filter: blur(5000px); /* This can cause transparency */
   -webkit-filter: blur(0.5px);
@@ -92,7 +92,6 @@
   height: 80vh;
   overflow: hidden;
   width: 95vw;
-  box-shadow: inset 0px 0px 30px rgba(0, 0, 0, 0.5);
   display: grid;
   grid-template-areas: "image content";
   grid-template-columns: 1fr 2.5fr;
@@ -162,7 +161,6 @@
   transform: translateY(-4rem);
   word-wrap: break-word;              /* Allow long words to break onto new lines */
   overflow-wrap: break-word;          /* Same as word-wrap, for modern browsers */
-  color: #000000;
 }
 
 .content-container p {
@@ -189,9 +187,6 @@
   padding: 0px 0px;
   border-radius: 10px;
 }
-
-
-    
   
 .info-container p {
   margin: 0;                          /* Remove default margin */
@@ -210,7 +205,6 @@
   height: 17vh;
   width: 100vw;
   overflow: hidden; /* Prevent content overflow */
-  box-shadow: inset 10px 10px 40px rgba(0, 0, 0, 0.5);
   display: flex;
   margin-top: auto;
   justify-content: space-between; /* Space between icons */
@@ -225,14 +219,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   font-weight: bold;
   font-size: 1.8rem;
   height: 50%;
   width: 20vw;
-  margin: 0;
+  margin: 500px;
   z-index: 2;
   box-sizing: border-box;
+}
+
+.connect {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  gap: 4rem; /* Space between icons */
 }
 
 .icon {
@@ -246,6 +248,7 @@
   margin: 0;
   z-index: 2;
   transition: 0.2s ease-in-out;
+  filter: hue-rotate(20deg) brightness(2);
 }
 
 .icon:hover {
@@ -262,8 +265,8 @@
   display: flex; /* Center content inside the button */
   justify-content: center;
   align-items: center;
-  background: #0077B5;
-  color: white;
+  background: var(--background-footer);
+  color: var(--text-secondary);
   font-weight: bold;
   font-size: 4.5rem; /* Adjust font size for better scaling */
   height: 80px;
@@ -278,10 +281,74 @@
 
 .linkedin:hover {
   pointer-events: auto;
-  background: white;
-  color: #0077B5;
+  background: rgb(0, 0, 0);
+  color: var(--text-primary);
 }
 
 .linkedin:active {
   transform: scale(1.5); /* Adds a "pressed" effect */
+}
+
+
+
+@media (min-width: 300px) and (max-width: 538px) {
+  .main-content {
+    height: 100vh;
+    width: 100vw;
+    overflow-y: auto;
+  }
+  .main-content::before {
+    height: 200vh;
+  }
+  .resume-section {
+    height: 200vh;
+    width: 90vw;
+    grid-template-areas: 
+      "image"
+      "content";
+    grid-template-columns: 1fr; /* Stack the image and content */
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .image-container {
+    opacity: 1;
+    grid-area: "image";
+    margin-bottom: 85vh; /* Adds space between stacked elements */
+  }
+  .image-container img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px; /* Adds rounded corners to the image */
+    object-fit: cover; /* Ensures the image maintains aspect ratio and fills the container */
+    max-width: 100%; /* Prevents the image from overflowing */
+    padding: 0px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adds subtle shadow for better aesthetics */
+  }
+
+  .content-container {
+    grid-area: "content";
+    padding-bottom: 85vh;
+    overflow-y: hidden;
+  }
+  /* Content text styling */
+  .content-container h1 {
+    transform: translateY(-30%);
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  .content-container p {
+      transform: translateY(-50px);
+      line-height: 1.6;
+      text-align: center;
+      font-size: 1rem;
+      padding: 40px 2px;
+  }
+
+  .info-container p {
+    line-height: 2;
+    text-align: center;
+    padding-top: 7rem;
+    font-size: 1rem;
+  }
 }

@@ -12,16 +12,17 @@ function AlternatingColorTitle({ text }) {
     const words = text.split(' ');
   
     return (
-      <h1 style={{ fontSize: 'var(--header-font-size)' }}>
+      <h1>
         {words.map((word, index) => {
-          // Alternate colors based on the index
-          const color = index % 2 === 0 ? 'color1' : 'color2';
-  
-          return (
-            <span key={index} className={color}>
-              {word}{' '}
-            </span>
-          );
+            // Alternate colors based on the index
+            const color = index % 2 === 0 ? 'color1' : 'color2';
+            // returns two span elements with alternating colors
+            // and the word inside
+            return (
+                <span key={index} className={color}>
+                    {word}{' '}
+                </span>
+            );
         })}
       </h1>
     );
@@ -32,12 +33,7 @@ function Home({ onExpand }) {
     const [isComplete, setIsComplete] = useState(false);
     const bodyRef = useRef(null);
     const title = "Atharva's Website";
-    const bodyText = "Hello! My name is Atharva Kerkar, and I'm a sophomore majoring in Computer Science with a minor in Economics at Purdue University.\n\nI am passionate about software development, " + 
-                    "and my ultimate career goal is to become a Sales Engineer. This role perfectly aligns with my interests, as it combines my technical expertise with my fascination for problem-solving and communication. " +
-                    "I have a strong foundation in data structures and algorithms and am eager to apply them to real-world challenges. " +
-                    "\n\nThank you for viewing my personal website. Feel free to contact me and have a great day.";
-
-
+    const bodyText = "I am a man studying Computer Science at Purdue University. I am minoring in Economics and Math.\nPlease feel free to reach out to me if you have any questions or would like to chat.\nAlso yeah, that poorly drawn head on the top left is supposed to be me with glasses.";
     // Handle terminal collapse after completion
     useEffect(() => {
         if (isComplete) {
@@ -71,27 +67,23 @@ function Home({ onExpand }) {
                 />
                 <div className="resume-section">
                     <div className="image-container">
-                        <img src={img} alt="Profile Picture" />
+                        <img src={img} alt="Profile" />
                     </div>
                     <div className="content-container">
                         <AlternatingColorTitle text="Atharva Kerkar" />
-                        <div className="info-container">
-                            <p style={{ fontSize: 'var(--paragraph-font-size)' }}>he/him</p>
-                            <p style={{ fontSize: 'var(--paragraph-font-size)' }}>//</p>
-                            <p style={{ fontSize: 'var(--paragraph-font-size)' }}>CS @ Purdue</p>
-                            <p style={{ fontSize: 'var(--paragraph-font-size)' }}>//</p>
-                            <p style={{ fontSize: 'var(--paragraph-font-size)' }}>Software Dev</p>
-                        </div>
-                        <p style={{ fontSize: 'var(--paragraph-font-size)' }}>
+                        <p>
                             {bodyText}
                         </p>
+                        <div className="connect">
+                            <a className="linkedin" href="https://www.linkedin.com/in/atharva-kerkar-58b4a5290/" target="_blank" rel="noopener noreferrer">
+                                in
+                            </a>
+                            <a className="icon" href="https://github.com/akerkar2005" target="_blank" rel="noopener noreferrer">
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <footer className="footer">
-                    <div style={{ fontSize: 'var(--footer-font-size)' }} className="rights">©2024 Atharva Kerkar</div>
-                    <a style={{ transform: `scale(var(--icon-scale))` }} href="https://github.com/akerkar2005" target="_blank" class="icon" rel="noopener noreferrer"></a>
-                    <a style={{ transform: `scale(var(--icon-scale))` }} href="https://www.linkedin.com/in/atharva-kerkar-58b4a5290/" target="_blank" class="linkedin" rel="noopener noreferrer">in</a>
-                </footer>
+
             </div>
         </div>
     );

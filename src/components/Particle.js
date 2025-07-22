@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import './Skills.css';
+import React, { useRef } from 'react';
+import './Projects.css';
 
 const Particle = ({ left, delay, textHeight }) => {
   const particleRef = useRef(null);
