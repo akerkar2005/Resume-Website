@@ -2,7 +2,7 @@
   "name": "hello-world",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://akerkar.github.io/personal",
+  "homepage": "https://akerkar2005.github.io/Resume-Website",
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
@@ -28,7 +28,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
