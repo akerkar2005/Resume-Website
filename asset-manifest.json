@@ -1,11 +1,12 @@
 {
   "files": {
-    "main.css": "/Resume-Website/static/css/main.5d71d1bb.css",
-    "main.js": "/Resume-Website/static/js/main.ecd98ab3.js",
+    "main.css": "/Resume-Website/static/css/main.a4763422.css",
+    "main.js": "/Resume-Website/static/js/main.acb8d94a.js",
     "static/js/488.77c8748a.chunk.js": "/Resume-Website/static/js/488.77c8748a.chunk.js",
     "static/media/wood.png": "/Resume-Website/static/media/wood.0cad3e89686999281f49.png",
     "static/media/portrait.jpg": "/Resume-Website/static/media/portrait.fb7c7632bf3017755cf4.jpg",
     "static/media/wallpaper.jpg": "/Resume-Website/static/media/wallpaper.3fd8671980e525f47284.jpg",
+    "static/media/182background.jpg": "/Resume-Website/static/media/182background.9f907f9c33e955753639.jpg",
     "static/media/buttonshow.png": "/Resume-Website/static/media/buttonshow.f77b247b6a94e85fe65d.png",
     "static/media/buttonhide.png": "/Resume-Website/static/media/buttonhide.498b4f364ce99f53cf1c.png",
     "static/media/ahhh.png": "/Resume-Website/static/media/ahhh.08dc59e0326eaa8ae155.png",
@@ -19,12 +20,12 @@
     "static/media/ts.png": "/Resume-Website/static/media/ts.16b157ea18cd87601675.png",
     "static/media/face.svg": "/Resume-Website/static/media/face.de68d9f592e82ca6e69cc5bc1cb2fda2.svg",
     "index.html": "/Resume-Website/index.html",
-    "main.5d71d1bb.css.map": "/Resume-Website/static/css/main.5d71d1bb.css.map",
-    "main.ecd98ab3.js.map": "/Resume-Website/static/js/main.ecd98ab3.js.map",
+    "main.a4763422.css.map": "/Resume-Website/static/css/main.a4763422.css.map",
+    "main.acb8d94a.js.map": "/Resume-Website/static/js/main.acb8d94a.js.map",
     "488.77c8748a.chunk.js.map": "/Resume-Website/static/js/488.77c8748a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5d71d1bb.css",
-    "static/js/main.ecd98ab3.js"
+    "static/css/main.a4763422.css",
+    "static/js/main.acb8d94a.js"
   ]
 }
