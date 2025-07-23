@@ -1,6 +1,3 @@
 [submodule "backend"]
 	path = backend
 	url = https://git.heroku.com/a-182-passman.git
-[submodule "a-182-passman"]
-	path = a-182-passman
-	url = https://git.heroku.com/a-182-passman.git
