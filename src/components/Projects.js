@@ -19,10 +19,7 @@ import ts from '../assets/ts.png';
 import potato from '../assets/potato.png';
 import face from '../assets/face.svg';
 
-
-
-
-function Contact({ onExpand }) {
+function Projects({ onExpand }) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [isComplete, setIsComplete] = useState(false);
     const headerRef = useRef(null);
@@ -52,8 +49,7 @@ function Contact({ onExpand }) {
         "Personal Website",
         "09/15/2023-present",
         "Fun website I built with React. You're looking at it right now!",
-        <img src={face} alt="React" style={{ width: 24, height: 24, display: 'block' }} />,
-        "https://github.com/akerkar2005/Resume-Website"
+        <img src={face} alt="React" style={{ width: 24, height: 24, display: 'block' }} />
       ]
     ];
 
@@ -276,4 +272,4 @@ function Contact({ onExpand }) {
     );
 }
 
-export default Contact;
+export default Projects;
