@@ -22,7 +22,10 @@ let PASSWORD_HASH = null;
 })();
 
 app.use(cors({
-  origin: 'https://akerkar2005.github.io', // replace with your actual GitHub Pages URL
+  origin: [
+    'https://akerkar2005.github.io', // GitHub Pages
+    'http://localhost:3000'          // Local React dev server
+  ],
   credentials: true
 }));
 app.use(express.json());
