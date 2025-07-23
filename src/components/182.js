@@ -10,7 +10,10 @@ function parseImageData(txt) {
     .split(/\r?\n/)
     .map(line => line.trim())
     .filter(line => line)
-    .map((caption, idx) => [idx, caption]);
+    .map((line, idx) => {
+      const [url, caption] = line.split('|');
+      return [url, caption || `Image ${idx + 1}`];
+    });
 }
 
 function CoolGalleryTitle({ count }) {
@@ -44,8 +47,8 @@ function ImageGallery({ images }) {
   const [photoIndex, setPhotoIndex] = useState(0);
   const modalRef = useRef(null);
 
-  function getImageSrc(num) {
-    return `${process.env.PUBLIC_URL}/assets/182Project/${num}.jpg`;
+  function getImageSrc(url) {
+    return url; // Use the full R2 URL
   }
 
   // Focus the modal for keyboard navigation when opened
@@ -178,9 +181,21 @@ function Page182({ onExpand }) {
   // Fetch images.txt from public/assets/182Project/images.txt at runtime
   useEffect(() => {
     if (isAuthenticated) {
-      fetch(`${process.env.PUBLIC_URL}/assets/182Project/images.txt`)
+      fetch(
+        `${process.env.PUBLIC_URL}/assets/182Project/images.txt`,
+        {
+          mode: 'cors',
+          headers: {
+            // Allow both localhost and your deployed frontend for CORS
+            Origin: window.location.origin
+          }
+        }
+      )
         .then(res => res.text())
-        .then(txt => setImages(parseImageData(txt)));
+        .then(txt => {
+          console.log('Raw images.txt:', txt); // Debug: log raw text
+          setImages(parseImageData(txt));
+        });
     }
   }, [isAuthenticated]);
 
