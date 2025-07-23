@@ -158,17 +158,31 @@ function Page182({ onExpand }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [images, setImages] = useState([]);
+  const [password, setPassword] = useState('');
+  const [authError, setAuthError] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const bodyRef = useRef(null);
   const title = "182 Picture Gallery";
 
   useFontSizeSetter();
 
+  // Check for token in localStorage on mount for persistence
+  useEffect(() => {
+    const token = localStorage.getItem('jwt_182');
+    if (token) {
+      setIsAuthenticated(true);
+      // Optionally: verify token with backend here
+    }
+  }, []);
+
   // Fetch images.txt from public/assets/182Project/images.txt at runtime
   useEffect(() => {
-    fetch(`${process.env.PUBLIC_URL}/assets/182Project/images.txt`)
-      .then(res => res.text())
-      .then(txt => setImages(parseImageData(txt)));
-  }, []);
+    if (isAuthenticated) {
+      fetch(`${process.env.PUBLIC_URL}/assets/182Project/images.txt`)
+        .then(res => res.text())
+        .then(txt => setImages(parseImageData(txt)));
+    }
+  }, [isAuthenticated]);
 
   // Handle terminal collapse after completion
   useEffect(() => {
@@ -188,6 +202,61 @@ function Page182({ onExpand }) {
 
     return () => clearTimeout(timer);
   }, [onExpand]);
+
+  // Handle password submit
+  const handlePasswordSubmit = async (e) => {
+    e.preventDefault();
+    setAuthError('');
+    try {
+      const res = await fetch('http://localhost:5151/api/auth182', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password })
+      });
+      const data = await res.json();
+      if (res.ok && data.token) {
+        localStorage.setItem('jwt_182', data.token);
+        setIsAuthenticated(true);
+        setPassword('');
+      } else {
+        setAuthError(data.error || 'Authentication failed');
+      }
+    } catch (err) {
+      setAuthError('Server error');
+    }
+  };
+
+  // Always show password form first
+  if (!isAuthenticated) {
+    return (
+    <div className={`main-page-wrapper ${isExpanded ? 'expanded' : ''}`}>
+        <TermHeader headerTitle={title} />
+        <div className="background-with-content">
+          <StickyHeader
+            bodyRef={bodyRef}
+            setIsComplete={setIsComplete}
+          />
+          <div className="gallery-content-custom" style={{ maxWidth: 400, margin: '0 auto', paddingTop: 150 }}>
+            <h2 style={{ color: '#fff', marginBottom: 24 }}>Enter Password to Access Gallery</h2>
+            <form onSubmit={handlePasswordSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <input
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                placeholder="Password"
+                style={{ padding: 12, fontSize: 18, borderRadius: 8, border: '1px solid #888' }}
+                required
+              />
+              <button type="submit" style={{ padding: 12, fontSize: 18, borderRadius: 8, background: '#1976d2', color: '#fff', border: 'none', fontWeight: 700 }}>
+                Unlock Gallery
+              </button>
+              {authError && <div style={{ color: '#da1075', fontWeight: 600 }}>{authError}</div>}
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`main-page-wrapper ${isExpanded ? 'expanded' : ''}`}>
