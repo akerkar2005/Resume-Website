@@ -21,7 +21,10 @@ let PASSWORD_HASH = null;
   PASSWORD_HASH = await bcrypt.hash(PASSWORD_TO_HASH, SALT_ROUNDS);
 })();
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://akerkar2005.github.io', // replace with your actual GitHub Pages URL
+  credentials: true
+}));
 app.use(express.json());
 
 // Auth endpoint
