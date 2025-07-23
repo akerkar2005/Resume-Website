@@ -208,13 +208,18 @@ function Page182({ onExpand }) {
     e.preventDefault();
     setAuthError('');
     try {
-      const res = await fetch('http://localhost:5151/api/auth182', {
+      const res = await fetch('https://a-182-passman-e03b83850f96.herokuapp.com/api/auth182', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password })
       });
+      if (!res.ok) {
+        const text = await res.text();
+        setAuthError('Server error: ' + text);
+        return;
+      }
       const data = await res.json();
-      if (res.ok && data.token) {
+      if (data.token) {
         localStorage.setItem('jwt_182', data.token);
         setIsAuthenticated(true);
         setPassword('');
@@ -222,7 +227,8 @@ function Page182({ onExpand }) {
         setAuthError(data.error || 'Authentication failed');
       }
     } catch (err) {
-      setAuthError('Server error');
+      console.error('Authentication error:', err);
+      setAuthError('Network/server error');
     }
   };
 
