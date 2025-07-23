@@ -228,13 +228,18 @@ function Page182({ onExpand }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password })
       });
-      if (!res.ok) {
+      let data;
+      try {
+        data = await res.json();
+      } catch (err) {
+        // If response is not JSON, fallback to text
         const text = await res.text();
         setAuthError('Server error: ' + text);
         return;
       }
-      const data = await res.json();
-      if (data.token) {
+      console.log('Auth response:', data); // Debug log
+
+      if (res.ok && data.token) {
         localStorage.setItem('jwt_182', data.token);
         setIsAuthenticated(true);
         setPassword('');
