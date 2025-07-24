@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import './TextAppear.css';
 import buttonshow from '../assets/buttonshow.png';
 import buttonhide from '../assets/buttonhide.png';

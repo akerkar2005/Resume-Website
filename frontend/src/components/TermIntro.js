@@ -47,7 +47,7 @@ function TermIntro() {
     const output3 = '-rw-r--r--@   1 atharva  staff     2307497 Nov 14 22:31 (8) Home.html\n' +
         '-rw-r--r--@   1 atharva  staff     2307497 Nov 14 22:32 (8) Projects.html\n' +
         '-rw-r--r--@   1 atharva  staff     2307497 Nov 14 22:33 (8) 182.html\n';
-    const message4 = 'echo -e \"\\033[2J\\033[H\"';
+    const message4 = '\n';
     const finalmsgopen = 'open Home.html';
 
     const desktopCommands = [

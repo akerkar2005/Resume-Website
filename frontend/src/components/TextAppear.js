@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './TextAppear.css';
 import TermHeader from './TerminalHeader.js';
 
@@ -13,11 +13,27 @@ function TextAppear({ commands = [], onComplete }) {
     const [isComplete, setIsComplete] = useState(false); // New state to track completion
     const textRef = useRef(null);
     const intervalRef = useRef(null);
-    const [isHovered, setIsHovered] = useState(false);
 
+    // Helper function for delay, now wrapped in useCallback to avoid dependency warning
+    const delay = useCallback((ms) => new Promise(resolve => setTimeout(resolve, ms)), []);
 
-    // Helper function for delay
-    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    // Move typewriterEffect above useEffect so it's defined before use
+    const typewriterEffect = useCallback(async (message) => {
+        setCurrentText(directory); // Set the initial text to the directory
+
+        // Loop through each character and simulate typing
+        for (let i = 0; i < message.length; i++) {
+            setCurrentText((prev) => directory + message.slice(0, i + 1)); // Add one letter at a time
+            await delay(80); // Wait 80ms between characters
+        }
+
+        // Once all letters are typed, add the full message to the text area
+        setTexts((prev) => [...prev, directory + message]);
+        setCurrentText(directory); // Reset the current text after typing finishes
+        if (currentIndex === commands.length - 2) {
+            await delay(400);
+        }
+    }, [directory, currentIndex, commands.length, delay]);
 
     useEffect(() => {
         if (isComplete) {
@@ -48,17 +64,17 @@ function TextAppear({ commands = [], onComplete }) {
                 console.log("current: " + currentIndex);
                 const { message = '', type } = commands[currentIndex];
 
-                if ((currentIndex === 3 && commands.length != 10) || (currentIndex === 2 && commands.length === 10)) {
+                if ((currentIndex === 3 && commands.length !== 10) || (currentIndex === 2 && commands.length === 10)) {
                     setCurrentText('');
                     setDirectory('atharva@data:~$ ');
                     await delay(800);
                 }
                 
-                if ((currentIndex === 4 && commands.length != 10) || (currentIndex === 3 && commands.length === 10)) {
+                if ((currentIndex === 4 && commands.length !== 10) || (currentIndex === 3 && commands.length === 10)) {
                     setDirectory('atharva@data:~/atharva/menu$ ');
                 }
 
-                if ((currentIndex === 7 && commands.length != 10) || (currentIndex === 6 && commands.length === 10)) {
+                if ((currentIndex === 7 && commands.length !== 10) || (currentIndex === 6 && commands.length === 10)) {
                     await delay(2500);
                 }
 
@@ -68,7 +84,6 @@ function TextAppear({ commands = [], onComplete }) {
                     setCurrentIndex(currentIndex + 1); // Move to the next command
                 }
                 else if (type === 'typewriter' && message) {
-                    let letterIndex = 0;
                     setCurrentText(directory);
                     clearInterval(intervalRef.current);
                     console.log('typewrite');
@@ -87,7 +102,7 @@ function TextAppear({ commands = [], onComplete }) {
                         onComplete()
                     }
                 }
-                if ((currentIndex === 3 && commands.length != 10) || (currentIndex === 2 && commands.length === 10)) {
+                if ((currentIndex === 3 && commands.length !== 10) || (currentIndex === 2 && commands.length === 10)) {
                     setHeaderTitle('ssh atharva@data');
                 }
 
@@ -97,33 +112,15 @@ function TextAppear({ commands = [], onComplete }) {
 
         processCommand();
 
+        // Fix: copy ref to variable for cleanup
+        const interval = intervalRef.current;
         return () => {
-            if (intervalRef.current) {
-                clearInterval(intervalRef.current);
+            if (interval) {
+                clearInterval(interval);
             }
         };
-    }, [currentIndex, commands]);
+    }, [currentIndex, commands, directory, onComplete, typewriterEffect, delay]);
 
-    // Helper function to handle typewriter effect with async/await
-    const typewriterEffect = async (message) => {
-        let letterIndex = 0;
-        setCurrentText(directory); // Set the initial text to the directory
-
-        // Loop through each character and simulate typing
-        for (let letterIndex = 0; letterIndex < message.length; letterIndex++) {
-            setCurrentText((prev) => directory + message.slice(0, letterIndex + 1)); // Add one letter at a time
-            await new Promise((resolve) => setTimeout(resolve, 80)); // Wait 90ms between characters
-        }
-
-        // Once all letters are typed, add the full message to the text area
-        setTexts((prev) => [...prev, directory + message]);
-        setCurrentText(directory); // Reset the current text after typing finishes
-        if (currentIndex === commands.length - 2) {
-            await delay(400);
-        }
-    };
-
-    
     useEffect(() => {
         if (textRef.current) {
             // Get the bounding rect of the current text
