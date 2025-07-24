@@ -48,44 +48,55 @@ function CoolGalleryTitle({ count }) {
 
 function ImageGallery({ images }) {
   const [viewerOpen, setViewerOpen] = useState(false);
-  const [photoIndex, setPhotoIndex] = useState(0);
+  // Persist photoIndex in localStorage
+  const [photoIndex, setPhotoIndex] = useState(() => {
+    const saved = localStorage.getItem('gallery_photo_index');
+    return saved ? Number(saved) : 0;
+  });
   const modalRef = useRef(null);
 
-  // Move hook outside of conditional rendering
-  const imgUrl = images.length > 0 ? images[photoIndex][0] : null;
-  const imgSrc = useImageSrcWithAuth(imgUrl);
+  // Save photoIndex to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('gallery_photo_index', photoIndex);
+  }, [photoIndex]);
 
-  function useImageSrcWithAuth(url) {
+  // Cache all images as blobs after authentication
+  const [imageCache, setImageCache] = useState({});
+
+  useEffect(() => {
     const token = localStorage.getItem('jwt_182');
-    const [src, setSrc] = useState(null);
+    if (!images.length || !token) return;
 
-    useEffect(() => {
-      if (!url || !token) {
-        setSrc(null);
-        return;
-      }
-      let active = true;
-      fetch(url, {
-        headers: {
-          Authorization: `Bearer ${token}`
+    let active = true;
+    const fetchAllImages = async () => {
+      const cache = {};
+      await Promise.all(images.map(async ([url], idx) => {
+        try {
+          const res = await fetch(url, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          if (res.ok) {
+            const blob = await res.blob();
+            cache[idx] = URL.createObjectURL(blob);
+          } else {
+            cache[idx] = null;
+          }
+        } catch {
+          cache[idx] = null;
         }
-      })
-        .then(res => res.ok ? res.blob() : Promise.reject('Unauthorized'))
-        .then(blob => {
-          if (active) setSrc(URL.createObjectURL(blob));
-        })
-        .catch(() => {
-          if (active) setSrc(null);
-        });
-      // Cleanup object URL on unmount or url/token change
-      return () => {
-        active = false;
-        if (src) URL.revokeObjectURL(src);
-      };
-    }, [url, token]);
+      }));
+      if (active) setImageCache(cache);
+    };
 
-    return src;
-  }
+    fetchAllImages();
+
+    // Cleanup object URLs on unmount or images change
+    return () => {
+      active = false;
+      Object.values(imageCache).forEach(src => src && URL.revokeObjectURL(src));
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [images]);
 
   // Focus the modal for keyboard navigation when opened
   useEffect(() => {
@@ -106,7 +117,6 @@ function ImageGallery({ images }) {
           e.currentTarget.classList.remove('gallery-open-btn-hover');
         }}
         onClick={() => {
-          setPhotoIndex(0);
           setViewerOpen(true);
           document.body.style.overflow = 'hidden';
         }}
@@ -151,7 +161,7 @@ function ImageGallery({ images }) {
             tabIndex={-1}
           >
             <img
-              src={imgSrc}
+              src={imageCache[photoIndex] || ''}
               alt={images[photoIndex][1] || `Gallery ${photoIndex + 1}`}
               className="gallery-modal-img"
             />
