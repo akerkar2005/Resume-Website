@@ -6,11 +6,15 @@ import TermHeader from './TerminalHeader.js';
 
 // Parse the txt file into an array of [number, caption] tuples
 function parseImageData(txt) {
+  // Debug: log the raw text
+  console.log('Parsing images.txt:', txt);
   return txt
     .split(/\r?\n/)
     .map(line => line.trim())
     .filter(line => line)
     .map((line, idx) => {
+      // Debug: log each line being parsed
+      console.log('Parsing line:', line);
       const [url, caption] = line.split('|');
       return [url, caption || `Image ${idx + 1}`];
     });
@@ -47,8 +51,40 @@ function ImageGallery({ images }) {
   const [photoIndex, setPhotoIndex] = useState(0);
   const modalRef = useRef(null);
 
-  function getImageSrc(url) {
-    return url; // Use the full R2 URL
+  // Move hook outside of conditional rendering
+  const imgUrl = images.length > 0 ? images[photoIndex][0] : null;
+  const imgSrc = useImageSrcWithAuth(imgUrl);
+
+  function useImageSrcWithAuth(url) {
+    const token = localStorage.getItem('jwt_182');
+    const [src, setSrc] = useState(null);
+
+    useEffect(() => {
+      if (!url || !token) {
+        setSrc(null);
+        return;
+      }
+      let active = true;
+      fetch(url, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(res => res.ok ? res.blob() : Promise.reject('Unauthorized'))
+        .then(blob => {
+          if (active) setSrc(URL.createObjectURL(blob));
+        })
+        .catch(() => {
+          if (active) setSrc(null);
+        });
+      // Cleanup object URL on unmount or url/token change
+      return () => {
+        active = false;
+        if (src) URL.revokeObjectURL(src);
+      };
+    }, [url, token]);
+
+    return src;
   }
 
   // Focus the modal for keyboard navigation when opened
@@ -115,7 +151,7 @@ function ImageGallery({ images }) {
             tabIndex={-1}
           >
             <img
-              src={getImageSrc(images[photoIndex][0])}
+              src={imgSrc}
               alt={images[photoIndex][1] || `Gallery ${photoIndex + 1}`}
               className="gallery-modal-img"
             />
@@ -178,23 +214,29 @@ function Page182({ onExpand }) {
     }
   }, []);
 
-  // Fetch images.txt from public/assets/182Project/images.txt at runtime
+  // Fetch images.txt from Cloudflare R2 Worker instead of local public folder
   useEffect(() => {
     if (isAuthenticated) {
       fetch(
-        `${process.env.PUBLIC_URL}/assets/182Project/images.txt`,
+        'https://gentle-resonance-4e17.arthoooo1337.workers.dev/images.txt',
         {
-          mode: 'cors',
-          headers: {
-            // Allow both localhost and your deployed frontend for CORS
-            Origin: window.location.origin
-          }
+          mode: 'cors'
         }
       )
-        .then(res => res.text())
+        .then(res => {
+          if (!res.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return res.text();
+        })
         .then(txt => {
           console.log('Raw images.txt:', txt); // Debug: log raw text
-          setImages(parseImageData(txt));
+          const parsed = parseImageData(txt);
+          console.log('Parsed images:', parsed); // Debug: log parsed array
+          setImages(parsed);
+        })
+        .catch(err => {
+          console.error('Failed to fetch images.txt:', err);
         });
     }
   }, [isAuthenticated]);
@@ -240,7 +282,7 @@ function Page182({ onExpand }) {
       console.log('Auth response:', data); // Debug log
 
       if (res.ok && data.token) {
-        localStorage.setItem('jwt_182', data.token);
+        localStorage.setItem('jwt_182', data.token); // Store JWT
         setIsAuthenticated(true);
         setPassword('');
       } else {
@@ -300,5 +342,6 @@ function Page182({ onExpand }) {
     </div>
   );
 }
+
 
 export default Page182;

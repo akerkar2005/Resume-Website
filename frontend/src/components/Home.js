@@ -5,6 +5,7 @@ import img from '../assets/portrait.jpg';
 import TermHeader from './TerminalHeader.js';
 import StickyHeader from './StickyHeader.js';
 import useFontSizeSetter from './fontSizeSetter.js';
+import 'font-awesome/css/font-awesome.min.css';
 
 
 function AlternatingColorTitle({ text }) {
@@ -80,6 +81,22 @@ function Home({ onExpand }) {
                             </a>
                             <a className="icon" href="https://github.com/akerkar2005" target="_blank" rel="noopener noreferrer">
                             </a>
+                            <a
+                                href={`${process.env.PUBLIC_URL}/Work_Resume.pdf`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="resume-download"
+                                style={{
+                                    padding: 0,
+                                    background: 'none',
+                                    border: 'none',
+                                    boxShadow: 'none',
+                                    display: 'inline-flex',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <i className="fa fa-download" style={{ fontSize: 50, color: '#317bd5ff', verticalAlign: 'middle' }}></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -90,3 +107,4 @@ function Home({ onExpand }) {
 }
 
 export default Home;
+
