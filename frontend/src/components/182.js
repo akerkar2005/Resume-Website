@@ -347,6 +347,7 @@ function Page182({ onExpand }) {
         <div className="gallery-content-custom">
           <CoolGalleryTitle count={images.length} />
           <ImageGallery images={images} />
+          <p className="paragraph">The 182 Project has been digitized and is now available for viewing.<br />Feel free to search for your entry and explore the collection.</p>
         </div>
       </div>
     </div>
