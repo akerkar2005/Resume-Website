@@ -275,4 +275,7 @@
     font-size: 1.5em;
     margin-bottom: 18px;
   }
+  .gallery-progress-label {
+    transform: translateX(-25%);
+  }
 }
