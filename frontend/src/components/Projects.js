@@ -18,6 +18,8 @@ import cpp from '../assets/cpp.png';
 import ts from '../assets/ts.png';
 import potato from '../assets/potato.png';
 import face from '../assets/face.svg';
+import autocorrect from '../assets/autocorrect.png';
+import whatsupboilerup from '../assets/whatsupboilerup.png';
 
 function Projects({ onExpand }) {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -38,19 +40,33 @@ function Projects({ onExpand }) {
 
     // Example projects array: [title, date, description, icon, link]
     const projects = [
-      [
-        "Potato Salad",
-        "02/23/2025-present",
-        "Stock scraper in Python that fetches stock data and displays it in a user-friendly format with sentimental analysis and RAG application.",
-        <img src={potato} alt="potato" style={{ width: 50, height: 50, display: 'block' }} />,
-        "https://github.com/akerkar2005/potato-salad/"
-      ],
-      [
-        "Personal Website",
-        "09/15/2023-present",
-        "Fun website I built with React. You're looking at it right now!",
-        <img src={face} alt="React" style={{ width: 24, height: 24, display: 'block' }} />
-      ]
+        [
+            "Potato Salad [WIP]",
+            "02/23/2025-present",
+            "[NOT WORKING] BoilerMake Hackathon Project: A stock scraper in Python that fetches stock data and displays it in a user-friendly format with sentimental analysis.",
+            <img src={potato} alt="potato" style={{ width: 50, height: 50, display: 'block' }} />,
+            "https://github.com/akerkar2005/potato-salad/"
+        ],
+        [
+        "Autocorrect & Autocomplete",
+        "10/23/2024-present",
+        "A React + Vite research project that implements a custom autocorrect and autocomplete feature using a Trie data structure, Levenshtein distance DP algorithm, and other techniques related to keyboard distance to analyze the nuances of autocorrect and autocomplete systems.",
+        <img src={autocorrect} alt="autocorrect" style={{ width: 50, height: 50, display: 'block' }} />,
+        "https://github.com/akerkar2005/gui-autocomplete-autocorrect/"
+        ],
+        [
+            "Personal Website",
+            "09/15/2023-present",
+            "Fun website I built with React. You're looking at it right now!",
+            <img src={face} alt="React" style={{ width: 24, height: 24, display: 'block' }} />
+        ],
+        [
+            "What's Up? Boiler Up!",
+            "09/15/2023-present",
+            "Hello World Hackathon Project: webscrapes Purdue event data and displays them on an interactive map of Purdue's campus.",
+            <img src={whatsupboilerup} alt="What's Up? Boiler Up!" style={{ width: 50, height: 50, display: 'block' }} />,
+            "https://www.whatsupboilerup.com/"
+        ]
     ];
 
     // Function to calculate sizes based on screen dimensions
