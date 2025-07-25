@@ -321,7 +321,6 @@
 }
 
 
-
 @media (min-width: 300px) and (max-width: 538px) {
   .main-content {
     height: 100vh;
@@ -381,5 +380,12 @@
     text-align: center;
     padding-top: 7rem;
     font-size: 1rem;
+  }
+  .connect {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    gap: 2rem; /* Space between icons */
   }
 }

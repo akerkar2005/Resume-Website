@@ -54,16 +54,20 @@ const VerticalTimeline = ({ projects, iconSize = 72 }) => {
       }
     });
 
-    if (presentBoundary && lastYearBoundary) {
-      const lineRect = lineRef.current.getBoundingClientRect();
-      const presentRect = presentBoundary.getBoundingClientRect();
-      const lastRect = lastYearBoundary.getBoundingClientRect();
-      // Start at present, end a bit above the last year boundary (shorten by 64px instead of 24px)
-      const start = presentRect.top + presentRect.offsetHeight / 2 - lineRect.top;
-      const end = lastRect.top + lastRect.offsetHeight / 2 - lineRect.top - 64;
-      lineRef.current.style.setProperty('--timeline-line-start', `${start}px`);
-      lineRef.current.style.setProperty('--timeline-line-height', `${end - start}px`);
-    }
+    // if (presentBoundary && lastYearBoundary) {
+    //   const lineRect = lineRef.current.getBoundingClientRect();
+    //   const presentRect = presentBoundary.getBoundingClientRect();
+    //   const lastRect = lastYearBoundary.getBoundingClientRect();
+    //   // Start at present, end a bit above the last year boundary (shorten by 64px instead of 24px)
+    //   const start = presentRect.top + presentRect.offsetHeight / 2 - lineRect.top;
+    //   const end = lastRect.top + lastRect.offsetHeight / 2 - lineRect.top - 64;
+    //   // Defensive: only set if end > start
+    //   const height = Math.max(0, end - start - 200);
+    //   lineRef.current.style.setProperty('--timeline-line-start', `${start}px`);
+    //   lineRef.current.style.setProperty('--timeline-line-height', `${height}px`);
+    //   // Debug: log values to verify
+    //   console.log('Timeline line start:', start, 'end:', end, 'height:', height);
+    // }
   }, [timelineItems.length]);
 
   // Set popup position when selected changes
@@ -133,14 +137,11 @@ const VerticalTimeline = ({ projects, iconSize = 72 }) => {
           ref={lineRef}
         >
           {timelineItems.map((item, idx) => {
-if (item.type === 'special') {
+            if (item.type === 'special') {
               return (
                 <div
                   className="timeline-year-boundary present-boundary"
                   key={item.key}
-                  style={{
-                    transform: item.label === 'present' ? 'translateY(-5em)' : undefined,
-                  }}
                 >
                   <span
                     className="timeline-year-horizontal"

@@ -185,3 +185,28 @@
   width: 30px;
   height: 30px;
 }
+
+@media (min-width: 300px) and (max-width: 538px) {
+  .main-text {
+    font-size: 5rem;
+  }
+  /* Add some variance to each particle’s size */
+  .particle:nth-of-type(2n) {
+    width: 5px;
+    height: 5px;
+  }
+
+  .particle:nth-of-type(3n) {
+    width: 10px;
+    height: 10px;
+  }
+
+  .liquid-text {
+    transform: translateY(50%);
+    font-size: 5rem; 
+  }
+
+  .contact-background {
+    height: 40vh;
+  }
+}

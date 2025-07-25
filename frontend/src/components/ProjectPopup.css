@@ -142,3 +142,27 @@
 .project-popup-close:hover {
   color: #da1053;
 }
+
+@media (min-width: 300px) and (max-width: 538px) {
+  .project-popup-content {
+    padding: 24px 20px 20px 20px;
+    width: 90vw;
+    max-width: 100%;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .project-popup-arrow {
+    font-size: 1.8em;
+    width: 36px;
+  }
+  .project-popup-title {
+    font-size: 1.3em;
+  }
+  .project-popup-date,
+  .project-popup-desc,
+  .project-popup-progress {
+    font-size: 0.9em;
+  }
+}

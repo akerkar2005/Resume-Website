@@ -147,7 +147,7 @@
     height: 2rem; /* Adjust the size of the icon */
     width: 2rem;
     object-fit: contain; /* Ensure the icon scales properly */
-    z-index: 10;
+    z-index: 1;
     animation: dance 5s infinite;
 }
 
@@ -339,10 +339,21 @@
   
   /* specific lower-bounded actions for a decent width while also maintaining mobile-friendliness...  */
   /* This has low precedence so these rules could be changed easily for later properties */
-  @media (min-width: 540px) and (max-width: 666px) {
+  @media (min-width: 539px) and (max-width: 666px) {
     .nav {
       display: none; /* Hide nav on mobile */
+      pointer-events: none; /* Prevent interaction */
+      justify-content: center;
+      align-items: center;
+      padding: 0 1rem;
     }
+    .mobile-nav {
+        display: flex; /* Show nav on mobile */
+        justify-content: center;
+        align-items: center;
+        padding: 0 1rem;
+    }
+      
     .resume-section {
       height: 200vh;
       width: 90vw;
